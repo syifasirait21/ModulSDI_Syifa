@@ -67,6 +67,8 @@ const DEFAULT_USERS = [
     completedLessons: ["materi_pasak"],
     badges: BADGES_DATA,
     lastProgressUpdate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(), // 1 day ago (active)
+    streak: 3,
+    lastActiveDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
   },
   {
     username: "togar",
@@ -86,6 +88,8 @@ const DEFAULT_USERS = [
     completedLessons: [],
     badges: BADGES_DATA,
     lastProgressUpdate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(), // 5 days ago (stagnant for 5 days)
+    streak: 0,
+    lastActiveDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
   },
   {
     username: "uli",
@@ -105,6 +109,8 @@ const DEFAULT_USERS = [
     completedLessons: [],
     badges: BADGES_DATA,
     lastProgressUpdate: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString(), // 4 days ago (stagnant for 4 days)
+    streak: 0,
+    lastActiveDate: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
   },
   {
     username: "bintang",
@@ -124,6 +130,8 @@ const DEFAULT_USERS = [
     completedLessons: ["materi_pasak"],
     badges: BADGES_DATA,
     lastProgressUpdate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(), // 2 days ago (active)
+    streak: 1,
+    lastActiveDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
   },
   {
     username: "guru",
@@ -334,6 +342,8 @@ export default function App() {
       },
       completedLessons: [],
       badges: BADGES_DATA,
+      streak: 0,
+      lastActiveDate: "",
     };
   });
 
@@ -371,6 +381,8 @@ export default function App() {
               completedLessons: profile.completedLessons,
               badges: profile.badges,
               lastProgressUpdate: profile.lastProgressUpdate || new Date().toISOString(),
+              streak: profile.streak,
+              lastActiveDate: profile.lastActiveDate,
             };
           }
           return u;
@@ -422,6 +434,8 @@ export default function App() {
             completedLessons: match.completedLessons || [],
             badges: match.badges || BADGES_DATA,
             lastProgressUpdate: match.lastProgressUpdate || new Date().toISOString(),
+            streak: match.streak || 0,
+            lastActiveDate: match.lastActiveDate || "",
           });
         }
         setScreen("dashboard");
@@ -465,6 +479,8 @@ export default function App() {
           completedLessons: match.completedLessons || [],
           badges: match.badges || BADGES_DATA,
           lastProgressUpdate: match.lastProgressUpdate || new Date().toISOString(),
+          streak: match.streak || 0,
+          lastActiveDate: match.lastActiveDate || "",
         });
       } else {
         // default fallback
@@ -484,6 +500,8 @@ export default function App() {
           completedLessons: [],
           badges: BADGES_DATA,
           lastProgressUpdate: new Date().toISOString(),
+          streak: 0,
+          lastActiveDate: "",
         });
       }
       setScreen("dashboard");
@@ -585,9 +603,49 @@ export default function App() {
     }
   };
 
+  const checkAndUpdateStreak = () => {
+    setProfile((prev) => {
+      const today = new Date();
+      // Format as YYYY-MM-DD
+      const todayStr = today.getFullYear() + "-" + 
+                       String(today.getMonth() + 1).padStart(2, "0") + "-" + 
+                       String(today.getDate()).padStart(2, "0");
+      
+      let currentStreak = prev.streak || 0;
+      const lastActive = prev.lastActiveDate; // "YYYY-MM-DD"
+
+      if (lastActive === todayStr) {
+        // Already updated today!
+        return prev;
+      }
+
+      const yesterday = new Date();
+      yesterday.setDate(today.getDate() - 1);
+      const yesterdayStr = yesterday.getFullYear() + "-" + 
+                           String(yesterday.getMonth() + 1).padStart(2, "0") + "-" + 
+                           String(yesterday.getDate()).padStart(2, "0");
+
+      if (!lastActive) {
+        currentStreak = 1;
+      } else if (lastActive === yesterdayStr) {
+        currentStreak += 1;
+      } else {
+        currentStreak = 1;
+      }
+
+      return {
+        ...prev,
+        streak: currentStreak,
+        lastActiveDate: todayStr,
+        lastProgressUpdate: new Date().toISOString(),
+      };
+    });
+  };
+
   const handleSelectLesson = (lessonId: string) => {
     setSelectedLessonId(lessonId);
     setScreen("materi");
+    checkAndUpdateStreak();
   };
 
   const handleUpdateProgress = (lessonId: string, percentage: number) => {

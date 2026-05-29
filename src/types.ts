@@ -8,6 +8,8 @@ export interface StudentProfile {
   completedLessons: string[]; // moduleId[]
   badges: Badge[];
   lastProgressUpdate?: string; // Last active/updated ISO timestamp
+  streak?: number;              // Current daily streak count
+  lastActiveDate?: string;      // Last active YYYY-MM-DD
 }
 
 export interface Badge {

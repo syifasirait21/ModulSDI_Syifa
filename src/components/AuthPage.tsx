@@ -239,14 +239,6 @@ export default function AuthPage({ onLoginSuccess, allUsers, onRegisterUser }: A
               </motion.div>
 
             </div>
-
-            {/* Quick Helper Tips */}
-            <div className="bg-slate-100/80 border border-slate-200 p-3.5 rounded-2xl text-center text-xs text-slate-500 max-w-lg mx-auto">
-              💡 <span className="font-bold text-slate-705">Tips Demo:</span> Akun Pengujian Tersedia. 
-              Siswa: <code className="bg-white px-1.5 py-0.5 rounded border font-mono font-bold text-emerald-600">siswa</code>, 
-              Guru: <code className="bg-white px-1.5 py-0.5 rounded border font-mono font-bold text-amber-600">guru</code>, 
-              Kata Sandi masing-masing: <code className="bg-white px-1.5 py-0.5 rounded border font-mono font-bold">123</code>
-            </div>
           </motion.div>
         ) : (
           

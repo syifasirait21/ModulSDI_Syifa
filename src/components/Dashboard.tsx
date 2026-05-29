@@ -134,7 +134,20 @@ export default function Dashboard({
               </div>
             </div>
 
-            <div className="flex items-center gap-3 self-start sm:self-auto">
+            <div className="flex items-center gap-2 md:gap-3 self-start sm:self-auto flex-wrap">
+              {/* Daily Streak Counter */}
+              <span
+                className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black border transition-all ${
+                  (profile.streak || 0) > 0
+                    ? "bg-amber-500/10 border-amber-300/40 text-amber-600 shadow-[0_2px_8px_rgba(245,158,11,0.06)]"
+                    : "bg-slate-100/80 border-slate-200 text-slate-400"
+                }`}
+                title="Belajar dan tuntaskan pelajaran setiap hari untuk menjaga energi beruntunmu!"
+              >
+                <Flame className={`w-3.5 h-3.5 shrink-0 ${ (profile.streak || 0) > 0 ? "text-amber-500 fill-amber-300 stroke-[2.5]" : "text-slate-400" }`} />
+                <span>{(profile.streak || 0)} Hari Beruntun</span>
+              </span>
+
               <span className="flex items-center gap-1.5 px-3 py-1 bg-amber-50 border border-amber-200 rounded-full text-xs font-black text-amber-700 shadow-sm">
                 <Trophy className="w-3.5 h-3.5 text-amber-500 fill-current" />
                 {profile.xp} XP

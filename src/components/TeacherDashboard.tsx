@@ -241,7 +241,13 @@ export default function TeacherDashboard({
                     className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-white border border-amber-200 hover:border-amber-400 text-slate-700 hover:text-slate-900 transition-all font-black text-[10px] uppercase tracking-wider cursor-pointer shadow-xs whitespace-nowrap active:scale-95"
                     title={`Belum aktif selama ${days} hari. Klik untuk menganalisis.`}
                   >
-                    <span className="text-xs">{st.avatar || "🌋"}</span>
+                    <span className="text-xs w-4 h-4 rounded-full flex items-center justify-center overflow-hidden shrink-0">
+                      {st.avatar && (st.avatar.startsWith("data:") || st.avatar.startsWith("http") || st.avatar.startsWith("/src") || st.avatar.startsWith("blob:")) ? (
+                        <img src={st.avatar} className="w-full h-full rounded-full object-cover" referrerPolicy="no-referrer" alt="Avatar" />
+                      ) : (
+                        st.avatar || "🌋"
+                      )}
+                    </span>
                     <span>{st.name.split(" ")[0]}</span>
                     <span className="px-1.5 py-0.5 rounded-full bg-amber-150/70 text-amber-800 text-[8px] font-black font-mono">
                       {days} Hari
@@ -368,8 +374,12 @@ export default function TeacherDashboard({
                             #{idx + 1}
                           </span>
                           {/* AVATAR */}
-                          <div className="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-lg">
-                            {student.avatar || "🌋"}
+                          <div className="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-lg overflow-hidden shrink-0">
+                            {student.avatar && (student.avatar.startsWith("data:") || student.avatar.startsWith("http") || student.avatar.startsWith("/src") || student.avatar.startsWith("blob:")) ? (
+                              <img src={student.avatar} className="w-full h-full rounded-full object-cover" referrerPolicy="no-referrer" alt="Avatar" />
+                            ) : (
+                              student.avatar || "🌋"
+                            )}
                           </div>
                           {/* INFO */}
                           <div>
@@ -627,8 +637,12 @@ export default function TeacherDashboard({
                       
                       <div className="relative w-24 h-24 mx-auto mb-4">
                         <div className="absolute inset-0 rounded-full bg-indigo-50 border-2 border-indigo-100 scale-105 animate-pulse" />
-                        <div className="w-24 h-24 rounded-full bg-slate-50 border border-slate-250 flex items-center justify-center text-5xl shrink-0 shadow-inner relative z-10 select-all group-hover:scale-105 transition-transform duration-300">
-                          {selectedStudent.avatar || "🌋"}
+                        <div className="w-24 h-24 rounded-full bg-slate-50 border border-slate-250 flex items-center justify-center text-5xl shrink-0 shadow-inner relative z-10 select-all group-hover:scale-105 transition-transform duration-300 overflow-hidden">
+                          {selectedStudent.avatar && (selectedStudent.avatar.startsWith("data:") || selectedStudent.avatar.startsWith("http") || selectedStudent.avatar.startsWith("/src") || selectedStudent.avatar.startsWith("blob:")) ? (
+                            <img src={selectedStudent.avatar} className="w-full h-full rounded-full object-cover" referrerPolicy="no-referrer" alt="Avatar" />
+                          ) : (
+                            selectedStudent.avatar || "🌋"
+                          )}
                         </div>
                       </div>
 

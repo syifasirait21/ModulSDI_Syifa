@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "motion/react";
-import { User, Award, CheckCircle, Flame, ShieldAlert, BookOpen, Edit2, Check } from "lucide-react";
+import { User, Award, CheckCircle, Flame, ShieldAlert, BookOpen, Edit2, Check, UploadCloud, Camera, Image } from "lucide-react";
 import { StudentProfile, Badge } from "../types";
 
 interface ProfilPageProps {
@@ -38,12 +38,61 @@ export default function ProfilPage({
 }: ProfilPageProps) {
   const [isEditingName, setIsEditingName] = useState(false);
   const [tempName, setTempName] = useState(profile.name);
+  const [isDragging, setIsDragging] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
 
   const saveName = () => {
     if (tempName.trim()) {
       onChangeName(tempName.trim());
       setIsEditingName(false);
     }
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDragging(false);
+    setUploadError(null);
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      processFile(e.dataTransfer.files[0]);
+    }
+  };
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setUploadError(null);
+    if (e.target.files && e.target.files[0]) {
+      processFile(e.target.files[0]);
+    }
+  };
+
+  const processFile = (file: File) => {
+    if (!file.type.startsWith("image/")) {
+      setUploadError("Hanya file gambar yang diperbolehkan!");
+      return;
+    }
+    if (file.size > 2 * 1024 * 1024) {
+      setUploadError("Ukuran file terlalu besar! Maksimal adalah 2MB.");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      if (event.target?.result && typeof event.target.result === "string") {
+        onChangeAvatar(event.target.result);
+      }
+    };
+    reader.onerror = () => {
+      setUploadError("Gagal membaca file gambar.");
+    };
+    reader.readAsDataURL(file);
   };
 
   // Counting science, quran, and tapanuli badges
@@ -59,8 +108,12 @@ export default function ProfilPage({
       {/* BACKGROUND AVATAR HEADER */}
       <div className="relative p-6 bg-white border-b border-slate-200 pt-10 text-center flex flex-col items-center">
         <div className="relative w-24 h-24 rounded-full bg-gradient-to-tr from-amber-400 via-emerald-500 to-sky-500 p-1 shadow-md">
-          <div className="w-full h-full rounded-full bg-white flex items-center justify-center text-5xl">
-            {profile.avatar}
+          <div className="w-full h-full rounded-full bg-white flex items-center justify-center text-5xl overflow-hidden">
+            {profile.avatar && (profile.avatar.startsWith("data:") || profile.avatar.startsWith("http") || profile.avatar.startsWith("/src") || profile.avatar.startsWith("blob:")) ? (
+              <img src={profile.avatar} className="w-full h-full rounded-full object-cover" referrerPolicy="no-referrer" alt="Avatar" />
+            ) : (
+              profile.avatar
+            )}
           </div>
         </div>
 
@@ -77,6 +130,42 @@ export default function ProfilPage({
               {av}
             </button>
           ))}
+        </div>
+
+        {/* DRAG AND DROP / FILE UPLOAD AREA FOR CUSTOM PROFILE PICTURE */}
+        <div className="mt-4 w-full max-w-sm px-4">
+          <div
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+            className={`flex flex-col items-center justify-center border-2 border-dashed rounded-2xl p-4 transition-all group cursor-pointer ${
+              isDragging
+                ? "border-amber-400 bg-amber-50/20 scale-[1.01]"
+                : "border-slate-200 hover:border-slate-350 bg-slate-50/50"
+            }`}
+          >
+            <input
+              type="file"
+              id="avatar-upload"
+              accept="image/*"
+              className="hidden"
+              onChange={handleFileSelect}
+            />
+            <label
+              htmlFor="avatar-upload"
+              className="flex flex-col items-center cursor-pointer text-center w-full h-full"
+            >
+              <UploadCloud className={`w-7 h-7 mb-1.5 transition-colors ${isDragging ? "text-amber-500 animate-bounce" : "text-slate-450 group-hover:text-amber-500"}`} />
+              <span className="text-xs font-black text-slate-700">Unggah Foto Profil Sendiri</span>
+              <span className="text-[10px] text-slate-400 mt-0.5">Ketuk untuk memilih atau seret gambar ke sini</span>
+              <span className="text-[8px] text-slate-400 font-mono mt-0.5">(JPG, PNG max. 2MB)</span>
+            </label>
+          </div>
+          {uploadError && (
+            <p className="text-[10px] font-black text-rose-500 mt-1.5 text-center animate-pulse">
+              ⚠️ {uploadError}
+            </p>
+          )}
         </div>
 
         {/* STUDENT NAME EDIT FORM */}

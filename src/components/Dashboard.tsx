@@ -121,8 +121,12 @@ export default function Dashboard({
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div className="flex items-center gap-3">
               <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-amber-400 to-emerald-500 p-0.5 shadow-md shrink-0">
-                <div className="w-full h-full rounded-full bg-amber-50 flex items-center justify-center text-2xl">
-                  {profile.avatar}
+                <div className="w-full h-full rounded-full bg-amber-50 flex items-center justify-center text-2xl overflow-hidden">
+                  {profile.avatar && (profile.avatar.startsWith("data:") || profile.avatar.startsWith("http") || profile.avatar.startsWith("/src") || profile.avatar.startsWith("blob:")) ? (
+                    <img src={profile.avatar} className="w-full h-full rounded-full object-cover" referrerPolicy="no-referrer" alt="Avatar" />
+                  ) : (
+                    profile.avatar
+                  )}
                 </div>
               </div>
               <div>

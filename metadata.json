@@ -1,0 +1,6 @@
+{
+  "name": "Modul Interaktif Gunung",
+  "description": "Modul pembelajaran interaktif bertema Gunung: Keajaiban Ciptaan Allah, mengintegrasikan Ilmu Pengetahuan Alam (IPA), Al-Qur'an, dan Etnosains Batak Toba.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

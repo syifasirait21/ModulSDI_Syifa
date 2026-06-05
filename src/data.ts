@@ -170,13 +170,17 @@ export const LESSONS_DATA: LessonContent[] = [
           arabic: "أَلَمْ نَجْعَلِ الْأَرْضَ مِهَادًا. وَالْجِبَالَ أَوْتَادًا",
           translation: "Bukankah Kami telah menjadikan bumi itu sebagai hamparan? Dan gunung-gunung kesemuanya sebagai pasak (awtad)?",
           explanation: "Kata 'Awtad' dalam bahasa Arab kuno berarti pasak tenda yang berfungsi menjangkar tenda agar stabil. Bagian pasak yang masuk ke dalam tanah jauh lebih panjang daripada yang terlihat di luar. Ini adalah diksi mukjizat ilmiah Al-Qur'an yang menjelaskan struktur akar gunung 14 abad sebelum geologi modern menemukannya.",
+          tafsir: "Menurut para mufasir seperti Ibnu Katsir, Al-Qurthubi, dan Tafsir Kementerian Agama RI, ayat ini menunjukkan salah satu bentuk nikmat Allah kepada manusia. Allah menjadikan bumi sebagai mihād (hamparan) yang nyaman untuk dihuni, ditanami, dan dijadikan tempat beraktivitas. Sementara itu, gunung-gunung dijadikan sebagai awtād (pasak-pasak) yang berfungsi menjaga keseimbangan bumi.\n\nIstilah awtād menggambarkan gunung sebagaimana pasak yang menancap kuat ke dalam tanah untuk menegakkan tenda. Penggunaan kata ini menunjukkan kekokohan dan peran penting gunung dalam menjaga kestabilan ciptaan Allah. Selain sebagai penyangga, gunung juga menjadi sumber kehidupan karena menyimpan cadangan air, memengaruhi iklim lokal, serta menghasilkan tanah yang subur bagi pertanian.\n\nMelalui ayat ini, Allah mengajak manusia untuk merenungkan keteraturan alam semesta sebagai tanda kebesaran-Nya. Keberadaan gunung tidak hanya memiliki fungsi fisik yang dapat dipelajari melalui ilmu pengetahuan, tetapi juga menjadi bukti kekuasaan Allah yang menciptakan bumi dengan penuh keseimbangan dan hikmah.",
+          ipaConnection: "Dalam kajian geologi modern, gunung memiliki struktur akar yang memanjang ke bawah permukaan bumi sehingga membantu menjaga keseimbangan kerak bumi. Selain itu, aktivitas vulkanik menghasilkan abu yang kaya mineral dan kemudian membentuk tanah vulkanis yang subur. Hal ini menjadikan wilayah pegunungan sebagai pusat pertanian yang produktif, sehingga semakin memperlihatkan manfaat gunung bagi kehidupan manusia sebagaimana diisyaratkan dalam ayat tersebut."
         },
         {
           surah: "An-Nazi'at",
           verse: "32",
           arabic: "وَالْجِبَالَ أَرْسَاهَا",
           translation: "Dan gunung-gunung Dia pancangkan dengan kokoh.",
-          explanation: "Kata 'Arsaha' berasal dari kata kerja yang sama dengan berlabuhnya kapal (bagaikan sauh jangkaran besi yang menahan kapal dari goyangan ombak). Allah menancapkan gunung di litosfer bumi sebagai jangkar bumi.",
+          explanation: "Kata arsāhā menggambarkan gunung sebagai sesuatu yang ditegakkan atau dipancangkan dengan kokoh. Dalam ilmu geologi modern, gunung memiliki struktur yang tidak hanya tampak di permukaan, tetapi juga memiliki bagian yang memanjang ke bawah kerak bumi. Struktur ini membantu menjaga keseimbangan kerak bumi melalui proses yang dikenal sebagai isostasi. Selain itu, aktivitas vulkanik di daerah pegunungan menghasilkan material kaya mineral yang kemudian membentuk tanah vulkanis subur sehingga mendukung pertumbuhan berbagai tanaman.",
+          tafsir: "Menurut Tafsir Ibnu Katsir dan Tafsir Kementerian Agama RI, ayat \"Wal-jibāla arsāhā\" (Dan gunung-gunung Dia pancangkan dengan kokoh) menjelaskan bahwa Allah menciptakan gunung sebagai bagian dari keseimbangan bumi. Kata arsāhā berasal dari akar kata yang bermakna \"meneguhkan\", \"memantapkan\", atau \"menambatkan\". Ayat ini menunjukkan bahwa gunung tidak diciptakan tanpa tujuan, melainkan memiliki fungsi penting dalam menjaga keteraturan sistem bumi serta menjadi sumber berbagai manfaat bagi makhluk hidup.\n\nGunung juga berperan sebagai tempat penyimpanan air, habitat berbagai makhluk hidup, serta sumber mineral yang mendukung kehidupan manusia. Dengan demikian, keberadaan gunung merupakan salah satu tanda kebesaran Allah yang patut direnungkan dan disyukuri.",
+          ipaConnection: "Dalam ilmu kebumian, gunung merupakan bagian penting dari dinamika litosfer bumi. Gunung terbentuk akibat aktivitas tektonik dan vulkanik yang berlangsung selama jutaan tahun. Keberadaan gunung memengaruhi berbagai proses alam, seperti siklus air, pembentukan tanah, dan persebaran keanekaragaman hayati. Aktivitas vulkanik juga menghasilkan material berupa abu dan batuan yang kaya mineral sehingga membentuk tanah vulkanis yang subur untuk pertanian.\n\nSelain itu, pegunungan berfungsi sebagai daerah tangkapan air (catchment area) yang menyimpan dan menyalurkan air hujan ke sungai, mata air, dan air tanah. Oleh karena itu, wilayah pegunungan sering menjadi sumber kehidupan bagi masyarakat di sekitarnya. Melalui kajian IPA, siswa dapat memahami bahwa gunung tidak hanya memiliki nilai keagamaan sebagai tanda kebesaran Allah SWT, tetapi juga memiliki peran penting dalam menjaga keseimbangan lingkungan dan mendukung kehidupan di bumi."
         },
       ],
       hikmah: "Penciptaan gunung merupakan bukti kasih sayang Allah SWT agar bumi yang berotasi sangat cepat (sekitar 1.670 km/jam di khatulistiwa) tetap tenang dan layak dihuni oleh manusia tanpa terjadinya pergeseran tanah terus-menerus.",
@@ -184,24 +188,28 @@ export const LESSONS_DATA: LessonContent[] = [
     etnosains: {
       title: "Etnosains Batak Toba: Dolok Pusuk Buhit sebagai Tiang Bumi",
       origin: "Mitos Penciptaan Mulajadi Na Bolon & Kosmologi Batak Toba",
-      narrative: "Dalam keyakinan leluhur suku Batak (Kuno), bumi berawal dari rerentuhan debu surgawi yang ditenun oleh Si Boru Deak Parujar di atas samudera luas. Untuk menahan bumi dari guncangan naga raksasa bawah tanah (Naga Peoha/Naga Padoha Niaji), Mulajadi Na Bolon (Tuhan Yang Maha Esa) menurunkan gumpalan tanah suci yang kemudian tumbuh menjadi Gunung Pusuk Buhit. Gunung ini dianggap sebagai 'Aksis Mundi' (pusat kosmos) atau tiang yang menambatkan dunia tengah agar tetap stabil dari amukan naga samudera kuno.",
+      narrative: "Dalam kepercayaan leluhur Batak Toba, alam semesta diciptakan dan diatur oleh Mulajadi Na Bolon, sosok pencipta tertinggi yang menjadi sumber kehidupan. Gunung Pusuk Buhit dipercaya sebagai tempat awal mula kehidupan manusia Batak dan berperan sebagai pusat kosmos (axis mundi) yang menghubungkan dunia atas, dunia tengah, dan dunia bawah. Kepercayaan ini mencerminkan pandangan masyarakat Batak Toba bahwa gunung memiliki peran penting dalam menjaga keseimbangan alam dan kehidupan manusia.",
+      ipaConnection: "Walaupun kisah ini bersifat mitologis, keberadaan gunung memang memiliki peran penting dalam sistem bumi. Gunung memengaruhi iklim lokal, siklus air, kesuburan tanah, serta menjadi habitat berbagai makhluk hidup. Dengan demikian, mitos tersebut menunjukkan bagaimana masyarakat tradisional memahami pentingnya gunung bagi keberlangsungan kehidupan melalui cara pandang budaya mereka.",
       practices: [
         {
           title: "Ritual Penghormatan Gunung",
-          desc: "Upacara syukur adat yang dipimpin tetua adat untuk memohon keseimbangan alam agar pusar bumi tidak diguncang bencana besar.",
+          desc: "Masyarakat Batak Toba secara turun-temurun melaksanakan berbagai ritual adat sebagai bentuk penghormatan kepada alam, termasuk gunung dan hutan di sekitarnya. Ritual ini mengandung pesan moral agar manusia menjaga hubungan yang harmonis dengan lingkungan dan tidak mengeksploitasi sumber daya alam secara berlebihan.",
           icon: "Sparkles",
+          ipaConnection: "Dalam ilmu lingkungan, perilaku menjaga keseimbangan alam sangat penting untuk mencegah kerusakan ekosistem. Pelestarian kawasan pegunungan membantu menjaga ketersediaan air, mengurangi risiko longsor, serta mempertahankan keanekaragaman hayati yang hidup di wilayah tersebut.",
         },
         {
           title: "Kearifan 'Ulayat' Tanah Pusuk Buhit",
-          desc: "Larangan keras melakukan perusakan tanah atau menebang pohon sembarangan di lereng sakral Pusuk Buhit agar tidak memancing 'bencana goyangnya tiang bumi'.",
+          desc: "Masyarakat adat menetapkan berbagai aturan adat (ulayat) yang melarang perusakan kawasan hutan, penebangan liar, maupun pengambilan sumber daya alam secara berlebihan di wilayah yang dianggap sakral. Aturan ini diwariskan dari generasi ke generasi sebagai bentuk tanggung jawab bersama dalam menjaga kelestarian lingkungan.",
           icon: "ShieldAlert",
+          ipaConnection: "Hutan di daerah pegunungan berfungsi sebagai daerah resapan air (catchment area) yang penting bagi siklus hidrologi. Jika hutan rusak, kemampuan tanah menyerap air akan berkurang sehingga meningkatkan risiko erosi, banjir, dan tanah longsor. Oleh karena itu, kearifan lokal masyarakat Batak Toba sejalan dengan prinsip konservasi lingkungan yang dipelajari dalam IPA modern.",
         },
       ],
     },
     rangkuman: [
-      "Secara sains, gunung memiliki bagian yang menjulur dalam-dalam ke mantel bumi yang disebut sebagai 'Akar Gunung', dijelaskan secara fisika dalam teori Isostasi.",
-      "Al-Qur'an menggunakan kata 'Awtad' (Pasak) dan 'Arsaha' (Jangkar) untuk menggambarkan gunung. Ini sangat cocok dengan bentuk fisik gunung dan akarnya secara tiga dimensi.",
-      "Masyarakat Batak Toba menghormati Gunung Pusuk Buhit sebagai pilar spiritual (Tiang Kosmologi) bumi yang menjaga stabilitas hulu pemukiman mereka dari marabahaya.",
+      "Teologi Al-Qur'an: Allah SWT menciptakan bumi sebagai hamparan yang nyaman (mihād) dan memancangkan gunung-gunung sebagai pasak-pasak kokoh (awtād / arsāhā) demi menjaga kesetimbangan bumi serta menjadi sumber berbagai maslahat hidup.",
+      "Kajian Isostasi & Geologi IPA: Dalam sains modern, gunung memiliki struktur akar di bawah kerak bumi yang menjaga stabilitas kerak bumi via mekanisme isostasi. Aktivitas vulkanik menghasilkan material kaya mineral yang menyuburkan tanah pertanian di sekitarnya.",
+      "Perspektif Kosmologi Batak Toba: Dolok Pusuk Buhit dipandang sebagai pusat kosmos (axis mundi) dalam keyakinan Mulajadi Na Bolon. Secara tidak langsung, kearifan ini menunjukkan rekognisi mendalam terhadap signifikansi ekologis gunung bagi kelangsungan hidup.",
+      "Kearifan Ekologi & Konservasi Modern: Aturan adat ulayat kehutanan dan ritual tradisi Batak Toba berfungsi menjaga kelestarian daerah resapan air (catchment area). Tindakan konservasi lokal ini selaras dengan prinsip modern pencegahan degradasi hidrologis, banjir, dan longsor."
     ],
     quiz: [
       {

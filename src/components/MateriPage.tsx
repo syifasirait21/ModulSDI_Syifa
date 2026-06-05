@@ -1023,6 +1023,27 @@ export default function MateriPage({
                       <strong className="text-emerald-700 block text-xs mb-1">Tinjauan Mukjizat Ilmiah:</strong>
                       {v.explanation}
                     </div>
+
+                    {/* Additional Tafsir & IPA Connection when available */}
+                    {v.tafsir && (
+                      <div className="mt-2 p-4 rounded-2xl bg-indigo-50/50 border border-indigo-100 text-[11px] leading-relaxed text-slate-700 font-sans shadow-xs">
+                        <strong className="text-indigo-800 flex items-center gap-1.5 text-xs mb-1.5 font-bold uppercase tracking-wider">
+                          <BookOpen className="w-3.5 h-3.5 animate-bounce" style={{ animationDuration: "3s" }} /> Tafsir Ayat
+                        </strong>
+                        {v.tafsir.split('\n\n').map((paragraph, idx) => (
+                          <p key={idx} className={idx > 0 ? "mt-2 font-medium" : "font-medium"}>{paragraph}</p>
+                        ))}
+                      </div>
+                    )}
+
+                    {v.ipaConnection && (
+                      <div className="mt-1 p-4 rounded-2xl bg-amber-50/60 border border-amber-100 text-[11px] leading-relaxed text-slate-700 font-sans shadow-xs">
+                        <strong className="text-amber-800 flex items-center gap-1.5 text-xs mb-1.5 font-bold uppercase tracking-wider">
+                          <Activity className="w-3.5 h-3.5 animate-pulse" /> Keterkaitan dengan Materi IPA
+                        </strong>
+                        <p className="font-medium text-amber-950/80">{v.ipaConnection}</p>
+                      </div>
+                    )}
                   </div>
                 );
               })}
@@ -1046,19 +1067,35 @@ export default function MateriPage({
                 <span className="text-[9px] font-black text-amber-700 uppercase tracking-widest block mb-1">Sumber Perspektif Budaya Toba</span>
                 <h4 className="text-sm font-black text-amber-900">{lesson.etnosains.origin}</h4>
                 <p className="text-xs text-slate-600 leading-relaxed mt-2.5 font-sans">{lesson.etnosains.narrative}</p>
+                {lesson.etnosains.ipaConnection && (
+                  <div className="mt-3.5 p-4 rounded-xl bg-sky-50 border border-sky-100 text-[11px] leading-relaxed text-slate-700 font-sans shadow-xs">
+                    <strong className="text-sky-800 flex items-center gap-1.5 text-xs mb-1.5 font-bold uppercase tracking-wider">
+                      <Activity className="w-3.5 h-3.5 animate-pulse text-sky-600" /> Keterkaitan dengan IPA
+                    </strong>
+                    <p className="font-medium text-slate-700">{lesson.etnosains.ipaConnection}</p>
+                  </div>
+                )}
               </div>
 
               <h4 className="text-xs font-black text-slate-700 uppercase tracking-widest mt-4 mb-2">Kearifan Ekologi & Mitologi Praktis</h4>
 
               <div className="grid grid-cols-1 gap-4">
                 {lesson.etnosains.practices.map((pr, idx) => (
-                  <div key={idx} className="p-4 rounded-2xl bg-white border border-slate-205 flex gap-3.5 shadow-sm">
+                  <div key={idx} className="p-4 rounded-2xl bg-white border border-slate-200 flex flex-col sm:flex-row gap-3.5 shadow-sm">
                     <div className="w-9 h-9 rounded-full bg-amber-50 border border-amber-200 text-amber-500 flex items-center justify-center shrink-0">
                       <Sparkles className="w-4 h-4" />
                     </div>
-                    <div>
+                    <div className="flex-1">
                       <h4 className="text-xs font-black text-slate-800 uppercase tracking-wider">{pr.title}</h4>
                       <p className="text-[11px] text-slate-600 leading-relaxed mt-1 font-sans">{pr.desc}</p>
+                      {pr.ipaConnection && (
+                        <div className="mt-3 p-3.5 rounded-xl bg-amber-50/60 border border-amber-100 text-[10.5px] leading-relaxed text-slate-700 font-sans shadow-xs">
+                          <strong className="text-amber-800 flex items-center gap-1.5 text-[11px] mb-1 font-bold uppercase tracking-wider">
+                            <Activity className="w-3 h-3 animate-pulse text-amber-600" /> Keterkaitan dengan IPA
+                          </strong>
+                          <p className="font-medium text-slate-700">{pr.ipaConnection}</p>
+                        </div>
+                      )}
                     </div>
                   </div>
                 ))}

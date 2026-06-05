@@ -28,6 +28,8 @@ export interface QuranVerse {
   translation: string;
   explanation: string;
   audioUrl?: string; // We'll make a custom audio generator or ambient audio web synthesis
+  tafsir?: string;
+  ipaConnection?: string;
 }
 
 export interface Hotspot {
@@ -81,7 +83,8 @@ export interface LessonContent {
     title: string;
     origin: string; // Batak Toba custom perspective
     narrative: string;
-    practices: { title: string; desc: string; icon: string }[];
+    ipaConnection?: string;
+    practices: { title: string; desc: string; icon: string; ipaConnection?: string }[];
   };
   rangkuman: string[];
   quiz: InteractiveQuizItem[];

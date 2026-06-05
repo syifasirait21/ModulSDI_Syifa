@@ -34,7 +34,7 @@ interface MateriPageProps {
 const TABS = [
   { id: "pemantik", label: "Pemantik" },
   { id: "eksplorasi", label: "Eksplorasi" },
-  { id: "sains", label: "Sains Modern" },
+  { id: "sains", label: "Sains (IPA)" },
   { id: "quran", label: "Al-Qur'an" },
   { id: "etnosains", label: "Etnosains Batak" },
   { id: "rangkuman", label: "Rangkuman" },

@@ -722,7 +722,7 @@ export default function App() {
             </span>
             <span className="h-4 w-px bg-slate-200" />
             <span className="text-xs text-slate-600 font-bold tracking-wide">
-              Integrasi Sains Modern • Quranic Kauniyah • Adat Batak Toba
+              Integrasi Sains (IPA) • Quranic Kauniyah • Adat Batak Toba
             </span>
           </div>
 
@@ -1075,7 +1075,7 @@ export default function App() {
                 <p>
                   Disusun dengan me-marge 3 pilar:
                   <br />
-                  🟢 <strong>Sains Modern</strong>: Fisika, Isostasi, dan Vulkanologi lempeng tektonik Sumatera.
+                  🟢 <strong>Sains (IPA)</strong>: Fisika, Isostasi, dan Vulkanologi lempeng tektonik Sumatera.
                   <br />
                   🔵 <strong>Pesan Al-Qur'an</strong>: Penyelidikan teologis diksi ilmiah 'Awtad' dan 'Rawasi'.
                   <br />

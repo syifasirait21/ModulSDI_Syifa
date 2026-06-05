@@ -23,6 +23,8 @@ import {
 import { LessonContent, StudentProfile, QuranVerse, Hotspot, MatchingPair } from "../types";
 // @ts-ignore
 import sumberkesuburan from "../sumberkesuburan.png";
+// @ts-ignore
+import gunungpasak from "../gunungpasak.png";
 
 interface MateriPageProps {
   lesson: LessonContent;
@@ -462,6 +464,133 @@ export default function MateriPage({
                   "{lesson.pemantik.question}"
                 </h3>
               </div>
+
+              {lesson.id === "materi_pasak" && (
+                <div className="w-full max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto overflow-hidden rounded-3xl border border-slate-200/95 bg-white p-3 shadow-md hover:shadow-xl transition-all duration-300">
+                  <div className="relative aspect-[16/10] md:aspect-[16/9] rounded-2xl bg-gradient-to-b from-sky-50 via-indigo-50/25 to-slate-50 overflow-hidden group border border-slate-100">
+                    
+                    {/* Stylized Interactive SVG Schematic Schema for Pasak Bumi & Isostasi (Fallback / Background) */}
+                    <div className="absolute inset-0 pointer-events-none opacity-90 select-none">
+                      <svg className="w-full h-full" viewBox="0 0 800 450" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        {/* sky background */}
+                        <rect width="800" height="450" fill="url(#pasakSkyGrad)" />
+                        
+                        {/* Soft cloud elements */}
+                        <path d="M50 80 Q100 50 150 80 T250 80 L250 100 L50 100 Z" fill="#ffffff" opacity="0.4" />
+                        <path d="M550 120 Q600 90 650 120 T750 120 L750 140 L550 140 Z" fill="#ffffff" opacity="0.3" />
+                        
+                        {/* Upper Crust Area (Kerak Bumi Litosfer) */}
+                        <rect x="0" y="220" width="800" height="70" fill="url(#crustGrad)" />
+                        
+                        {/* Mountain (Awtad/Pasak) */}
+                        <path d="M220 220 L350 70 L400 70 L520 220 Z" fill="url(#pasakVolcanoGrad)" />
+                        
+                        {/* Snow Peak / Summit */}
+                        <path d="M333 90 L350 70 L400 70 L415 90 Q375 105 333 90 Z" fill="#f1f5f9" />
+                        
+                        {/* Deep Roots of Mountain (Akar Gunung) going deep into Asthenosphere (Mantel Bumi) */}
+                        <path d="M250 290 L340 420 L420 420 L490 290 Z" fill="url(#rootsGrad)" />
+                        
+                        {/* Mantle Area (Astenosfer / Mantel Bumi cair elastis) */}
+                        <rect x="0" y="290" width="800" height="160" fill="url(#mantleGrad)" opacity="0.85" />
+                        
+                        {/* Redraw roots semi-transparent over mantle for x-ray preview */}
+                        <path d="M250 290 L340 420 L420 420 L490 290 Z" fill="url(#rootsRefGrad)" stroke="#fda4af" strokeWidth="1.5" strokeDasharray="4,4" opacity="0.9" />
+
+                        {/* Force Balance Vectors (Isostasy Forces) */}
+                        {/* Weight Force (Gaya Berat ke Bawah) */}
+                        <path d="M370 175 L370 235" stroke="#f43f5e" strokeWidth="3" markerEnd="url(#redArrow)" />
+                        <text x="382" y="200" fill="#f43f5e" fontSize="10" fontWeight="900">Gaya Gravitasi (g)</text>
+                        
+                        {/* Buoyancy force (Gaya Apung Mantel ke Atas) */}
+                        <path d="M385 410 L385 350" stroke="#38bdf8" strokeWidth="3" markerEnd="url(#blueArrow)" />
+                        <text x="397" y="380" fill="#38bdf8" fontSize="10" fontWeight="900">Gaya Apung (Isostase)</text>
+                        
+                        {/* Labels & Annotations */}
+                        <text x="60" y="255" fill="#1e293b" fontSize="11" fontWeight="800" letterSpacing="0.5">KERAK BUMI (LITOSFER)</text>
+                        <text x="60" y="270" fill="#cbd5e1" fontSize="9" fontWeight="bold">Massa Jenis Lebih Rendah (ρ ≈ 2.7 g/cm³)</text>
+                        
+                        <text x="60" y="330" fill="#fff" fontSize="11" fontWeight="800" letterSpacing="0.5" opacity="0.9">MANTEL BUMI (ASTENOSFER)</text>
+                        <text x="60" y="345" fill="#94a3b8" fontSize="9" fontWeight="bold" opacity="0.9">Massa Jenis Lebih Tinggi (ρ ≈ 3.3 g/cm³)</text>
+
+                        {/* Concept labels */}
+                        <text x="440" y="115" fill="#1e293b" fontSize="10" fontWeight="800">Bagian Terbuka (Puncak)</text>
+                        <path d="M435 112 L380 95" stroke="#475569" strokeWidth="1" strokeDasharray="2,2" />
+
+                        <text x="445" y="375" fill="#fff" fontSize="10" fontWeight="800" opacity="0.9">Akar Gunung (Awtad/Pasak)</text>
+                        <path d="M440 372 L395 365" stroke="#fff" strokeWidth="1" strokeDasharray="2,2" opacity="0.6" />
+
+                        {/* Title Header Board */}
+                        <rect x="25" y="25" width="210" height="75" rx="10" fill="#ffffff" fillOpacity="0.85" stroke="#e2e8f0" strokeWidth="1.5" />
+                        <text x="35" y="45" fill="#0f172a" fontSize="10" fontWeight="900">SAINS FISIKA KEBUMIAN (IPA)</text>
+                        <text x="35" y="60" fill="#334155" fontSize="9" fontWeight="bold">• Teori Isostasi Kerak Bumi</text>
+                        <text x="35" y="73" fill="#334155" fontSize="9" fontWeight="bold">• Keseimbangan Hidrostatis</text>
+                        <text x="35" y="86" fill="#334155" fontSize="9" fontWeight="bold">• Kedalaman Akar ≈ 5x Tinggi Puncak</text>
+
+                        <circle cx="340" cy="420" r="3" fill="#38bdf8" />
+                        <circle cx="420" cy="420" r="3" fill="#38bdf8" />
+
+                        <defs>
+                          <marker id="redArrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#f43f5e" />
+                          </marker>
+                          <marker id="blueArrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#38bdf8" />
+                          </marker>
+                          
+                          <linearGradient id="pasakSkyGrad" x1="400" y1="0" x2="400" y2="450" gradientUnits="userSpaceOnUse">
+                            <stop offset="0" stopColor="#bae6fd" />
+                            <stop offset="0.6" stopColor="#e0f2fe" />
+                            <stop offset="1" stopColor="#f8fafc" />
+                          </linearGradient>
+                          <linearGradient id="crustGrad" x1="400" y1="220" x2="400" y2="290" gradientUnits="userSpaceOnUse">
+                            <stop offset="0" stopColor="#8d99ae" />
+                            <stop offset="1" stopColor="#4a5759" />
+                          </linearGradient>
+                          <linearGradient id="pasakVolcanoGrad" x1="370" y1="70" x2="370" y2="220" gradientUnits="userSpaceOnUse">
+                            <stop offset="0" stopColor="#64748b" />
+                            <stop offset="1" stopColor="#334155" />
+                          </linearGradient>
+                          <linearGradient id="rootsGrad" x1="370" y1="290" x2="370" y2="420" gradientUnits="userSpaceOnUse">
+                            <stop offset="0" stopColor="#1e293b" />
+                            <stop offset="1" stopColor="#0f172a" />
+                          </linearGradient>
+                          <linearGradient id="rootsRefGrad" x1="370" y1="290" x2="370" y2="420" gradientUnits="userSpaceOnUse">
+                            <stop offset="0" stopColor="#fda4af" stopOpacity="0.4" />
+                            <stop offset="1" stopColor="#f43f5e" stopOpacity="0.1" />
+                          </linearGradient>
+                          <linearGradient id="mantleGrad" x1="400" y1="290" x2="400" y2="450" gradientUnits="userSpaceOnUse">
+                            <stop offset="0" stopColor="#3c162f" />
+                            <stop offset="0.4" stopColor="#1e0b18" />
+                            <stop offset="1" stopColor="#0b0007" />
+                          </linearGradient>
+                        </defs>
+                      </svg>
+                    </div>
+
+                    {/* Premium Image overlay */}
+                    <img
+                      src={gunungpasak}
+                      className="absolute inset-0 w-full h-full object-cover transition-all duration-700 pointer-events-none group-hover:scale-[1.015]"
+                      referrerPolicy="no-referrer"
+                      alt="Gunung Sebagai Pasak Bumi"
+                      onError={(e) => {
+                        e.currentTarget.style.display = "none";
+                      }}
+                    />
+
+                    {/* Info Overlay Panel */}
+                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/80 via-slate-900/45 to-transparent p-4 md:p-6 flex flex-col justify-end z-10 pointer-events-none">
+                      <span className="self-start text-[9px] md:text-[10px] font-black text-sky-300 bg-sky-950/50 backdrop-blur-md px-3 py-1 rounded-lg uppercase tracking-wider mb-2 border border-sky-500/20 shadow-xs">
+                        Sains Isostasi & Geofisika IPA
+                      </span>
+                      <p className="text-xs md:text-sm font-extrabold text-white tracking-wide leading-snug drop-shadow-sm">
+                        Secara Sains IPA (Fisika), gunung menancap bagai pasak (pegs) dengan akar yang menjunam sangat dalam ke mantel bumi untuk menyeimbangkan berat jenis kerak bumi.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {lesson.id === "materi_subur" && (
                 <div className="w-full max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto overflow-hidden rounded-3xl border border-slate-200/95 bg-white p-3 shadow-md hover:shadow-xl transition-all duration-300">

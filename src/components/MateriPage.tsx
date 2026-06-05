@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import {
   ArrowLeft,
@@ -25,6 +25,8 @@ import { LessonContent, StudentProfile, QuranVerse, Hotspot, MatchingPair } from
 import sumberkesuburan from "../sumberkesuburan.png";
 // @ts-ignore
 import gunungpasak from "../gunungpasak.png";
+// @ts-ignore
+import pasakpasak from "../pasakpasak.png";
 
 interface MateriPageProps {
   lesson: LessonContent;
@@ -74,63 +76,179 @@ export default function MateriPage({
   const [matchedPairs, setMatchedPairs] = useState<string[]>([]); // left strings
   const [matchingIncorrect, setMatchingIncorrect] = useState<boolean>(false);
 
-  // Trigger synthetic speech or play audio waves to recite Al-Quran in Arabic
-  const handlePlayQuranAudio = (verseKey: string, arabicText: string) => {
-    const isPlaying = isPlayingAudio[verseKey];
-    if (isPlaying) {
-      setIsPlayingAudio((prev) => ({ ...prev, [verseKey]: false }));
+  // References and helper triggers for the real Al-Quran recitation audio playback
+  const currentAudioRef = useRef<HTMLAudioElement | null>(null);
+  const activeAudioKeyRef = useRef<string | null>(null);
+  const [activeMuted, setActiveMuted] = useState<boolean>(false);
+
+  useEffect(() => {
+    return () => {
+      if (currentAudioRef.current) {
+        currentAudioRef.current.pause();
+        currentAudioRef.current = null;
+      }
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
       }
-      return;
-    }
+    };
+  }, [lesson]);
 
-    // Stop other audios
+  const getAudioUrls = (surahName: string, verseRange: string): string[] => {
+    const surahMap: Record<string, number> = {
+      "An-Naba'": 78,
+      "An-Nazi'at": 79,
+      "An-Naml": 27,
+      "Al-Mursalat": 77,
+      "An-Nahl": 16,
+      "Al-Hijr": 15
+    };
+    const surahNum = surahMap[surahName];
+    if (!surahNum) return [];
+
+    const pad3 = (num: number) => String(num).padStart(3, '0');
+    
+    if (verseRange.toString().includes("-")) {
+      const [start, end] = verseRange.toString().split("-").map(Number);
+      const urls: string[] = [];
+      for (let i = start; i <= end; i++) {
+        urls.push(`https://everyayah.com/data/Alafasy_128kbps/${pad3(surahNum)}${pad3(i)}.mp3`);
+      }
+      return urls;
+    } else {
+      const verseNum = Number(verseRange);
+      return [`https://everyayah.com/data/Alafasy_128kbps/${pad3(surahNum)}${pad3(verseNum)}.mp3`];
+    }
+  };
+
+  const playFallbackSpeech = (verseKey: string, arabicText: string) => {
     setIsPlayingAudio({});
     setIsPlayingAudio((prev) => ({ ...prev, [verseKey]: true }));
+    activeAudioKeyRef.current = verseKey;
 
-    // Update progress simulate (adjusted speed for Arabic recitation)
     let currentVal = 0;
     const interval = setInterval(() => {
-      currentVal += 3;
+      currentVal += 2;
       setAudioProgress((prev) => ({ ...prev, [verseKey]: Math.min(100, currentVal) }));
       if (currentVal >= 100) {
         clearInterval(interval);
         setIsPlayingAudio((prev) => ({ ...prev, [verseKey]: false }));
         setAudioProgress((prev) => ({ ...prev, [verseKey]: 0 }));
+        activeAudioKeyRef.current = null;
       }
-    }, 200);
+    }, 150);
 
-    // Speak the actual Quranic Arabic text
     if ('speechSynthesis' in window) {
       window.speechSynthesis.cancel();
       const sentence = new SpeechSynthesisUtterance(arabicText);
       sentence.lang = 'ar-SA';
-      
-      // Attempt to set an Arabic voice if available
       const voices = window.speechSynthesis.getVoices();
       const arabicVoice = voices.find((v) => v.lang.startsWith('ar'));
-      if (arabicVoice) {
-        sentence.voice = arabicVoice;
-      }
-      
-      sentence.pitch = 0.9; // Slightly lower pitch for a respectful, deeper tone
-      sentence.rate = 0.7;  // Distinct, slow pace suitable for Quran recitation
-      
+      if (arabicVoice) sentence.voice = arabicVoice;
+      sentence.pitch = 0.95;
+      sentence.rate = 0.65;
+
       sentence.onend = () => {
+        clearInterval(interval);
         setIsPlayingAudio((prev) => ({ ...prev, [verseKey]: false }));
         setAudioProgress((prev) => ({ ...prev, [verseKey]: 0 }));
-        clearInterval(interval);
+        activeAudioKeyRef.current = null;
       };
-      
+
       sentence.onerror = () => {
+        clearInterval(interval);
         setIsPlayingAudio((prev) => ({ ...prev, [verseKey]: false }));
         setAudioProgress((prev) => ({ ...prev, [verseKey]: 0 }));
-        clearInterval(interval);
+        activeAudioKeyRef.current = null;
       };
 
       window.speechSynthesis.speak(sentence);
     }
+  };
+
+  // Trigger real-audio streamed recitation from Alafasy
+  const handlePlayQuranAudio = (verseKey: string, arabicText: string, surahName: string, verseRange: string) => {
+    const isPlaying = isPlayingAudio[verseKey];
+    
+    // If clicking on the currently active audio, toggle play/pause status
+    if (activeAudioKeyRef.current === verseKey && currentAudioRef.current) {
+      if (isPlaying) {
+        currentAudioRef.current.pause();
+        setIsPlayingAudio((prev) => ({ ...prev, [verseKey]: false }));
+      } else {
+        currentAudioRef.current.play().catch(() => {
+          playFallbackSpeech(verseKey, arabicText);
+        });
+        setIsPlayingAudio((prev) => ({ ...prev, [verseKey]: true }));
+      }
+      return;
+    }
+
+    // Stop and clear anything currently playing
+    if (currentAudioRef.current) {
+      currentAudioRef.current.pause();
+      currentAudioRef.current = null;
+    }
+    if ('speechSynthesis' in window) {
+      window.speechSynthesis.cancel();
+    }
+    
+    // Reset other play indicators
+    setIsPlayingAudio({});
+    setAudioProgress((prev) => {
+      const next = { ...prev };
+      Object.keys(next).forEach(k => { next[k] = 0; });
+      return next;
+    });
+
+    const urls = getAudioUrls(surahName, verseRange);
+    if (urls.length === 0) {
+      playFallbackSpeech(verseKey, arabicText);
+      return;
+    }
+
+    activeAudioKeyRef.current = verseKey;
+    setIsPlayingAudio((prev) => ({ ...prev, [verseKey]: true }));
+
+    let currentTrackIndex = 0;
+
+    const playTrack = (index: number) => {
+      if (index >= urls.length) {
+        setIsPlayingAudio((prev) => ({ ...prev, [verseKey]: false }));
+        setAudioProgress((prev) => ({ ...prev, [verseKey]: 0 }));
+        activeAudioKeyRef.current = null;
+        currentAudioRef.current = null;
+        return;
+      }
+
+      const audio = new Audio(urls[index]);
+      audio.muted = activeMuted;
+      currentAudioRef.current = audio;
+
+      audio.addEventListener("timeupdate", () => {
+        if (audio.duration) {
+          const percentOfTrack = (audio.currentTime / audio.duration) * 100;
+          const weightedPercent = (index * 100 + percentOfTrack) / urls.length;
+          setAudioProgress((prev) => ({ ...prev, [verseKey]: Math.min(100, weightedPercent) }));
+        }
+      });
+
+      audio.addEventListener("ended", () => {
+        currentTrackIndex++;
+        playTrack(currentTrackIndex);
+      });
+
+      audio.addEventListener("error", () => {
+        console.warn("Failed to stream mp3. Falling back to speech synthesis.");
+        playFallbackSpeech(verseKey, arabicText);
+      });
+
+      audio.play().catch((err) => {
+        console.warn("Audio play blocked. Doing speech synthesis fallback:", err);
+        playFallbackSpeech(verseKey, arabicText);
+      });
+    };
+
+    playTrack(currentTrackIndex);
   };
 
   // Drag Matching connections trigger
@@ -245,57 +363,73 @@ export default function MateriPage({
     switch (lesson.sains.diagramType) {
       case "isostasy":
         return (
-          <svg viewBox="0 0 400 240" className="w-full bg-slate-50 rounded-2xl border border-slate-200" fill="none" stroke="currentColor">
-            {/* Atmosphere gradient */}
-            <defs>
-              <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#bae6fd" />
-                <stop offset="100%" stopColor="#f0f9ff" />
-              </linearGradient>
-            </defs>
-            <rect width="400" height="240" fill="url(#skyGrad)" />
-            {/* Ocean layer */}
-            <path d="M 0 140 Q 100 135 200 140 T 400 140 L 400 240 L 0 240 Z" fill="#93c5fd" opacity="0.4" stroke="none" />
-            <line x1="0" y1="140" x2="400" y2="140" stroke="#0284c7" strokeWidth="1.5" strokeDasharray="4 4" />
+          <div className="relative w-full aspect-[16/10] md:aspect-[16/9] rounded-2xl bg-gradient-to-b from-sky-50 via-indigo-50/25 to-slate-50 overflow-hidden border border-slate-200 shadow-sm group">
+            {/* SVG drawing as the underlying schematic schema */}
+            <div className="absolute inset-0 select-none opacity-90">
+              <svg viewBox="0 0 400 240" className="w-full h-full" fill="none" stroke="currentColor">
+                {/* Atmosphere gradient */}
+                <defs>
+                  <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#bae6fd" />
+                    <stop offset="100%" stopColor="#f0f9ff" />
+                  </linearGradient>
+                </defs>
+                <rect width="400" height="240" fill="url(#skyGrad)" />
+                {/* Ocean layer */}
+                <path d="M 0 140 Q 100 135 200 140 T 400 140 L 400 240 L 0 240 Z" fill="#93c5fd" opacity="0.4" stroke="none" />
+                <line x1="0" y1="140" x2="400" y2="140" stroke="#0284c7" strokeWidth="1.5" strokeDasharray="4 4" />
 
-            {/* Mantle layer (astenosfer) */}
-            <rect x="0" y="170" width="400" height="70" fill="#fed7aa" stroke="none" />
-            <line x1="0" y1="170" x2="400" y2="170" stroke="#ca8a04" strokeWidth="1.5" />
-            <text x="310" y="210" className="fill-amber-800 text-[10px] font-sans font-black uppercase tracking-wider">Astenosfer</text>
+                {/* Mantle layer (astenosfer) */}
+                <rect x="0" y="170" width="400" height="70" fill="#fed7aa" stroke="none" />
+                <line x1="0" y1="170" x2="400" y2="170" stroke="#ca8a04" strokeWidth="1.5" />
+                <text x="310" y="210" className="fill-amber-800 text-[10px] font-sans font-black uppercase tracking-wider">Astenosfer</text>
 
-            {/* Crust layer & deep roots */}
-            {/* The root goes deep into mantle (from x=120 to x=280) */}
-            <path
-              d="M 0 140 L 100 140 L 140 100 L 200 60 L 250 110 L 280 140 L 400 140 L 400 170 L 280 170 C 260 210 140 210 120 170 L 0 170 Z"
-              fill="#f5e0c5"
-              stroke="#ca8a04"
-              strokeWidth="2"
-            />
-            <text x="15" y="158" className="fill-slate-600 font-extrabold text-[9px] font-bold">Kerak (Sial/Sima)</text>
-            <text x="175" y="195" className="fill-amber-800 text-[9px] font-black uppercase">Akar Gunung (Awtad)</text>
-
-            {/* Hotspots clickable */}
-            {lesson.sains.hotspots?.map((hs) => (
-              <g
-                key={hs.id}
-                className="cursor-pointer group"
-                onClick={() => setSelectedHotspot(hs)}
-              >
-                <circle
-                  cx={`${hs.x}%`}
-                  cy={`${hs.y}%`}
-                  r="7"
-                  className={`${
-                    selectedHotspot?.id === hs.id
-                      ? "fill-amber-400 stroke-white text-orange-500 animate-pulse"
-                      : "fill-sky-500 stroke-slate-900 group-hover:fill-amber-400"
-                  }`}
+                {/* Crust layer & deep roots */}
+                {/* The root goes deep into mantle (from x=120 to x=280) */}
+                <path
+                  d="M 0 140 L 100 140 L 140 100 L 200 60 L 250 110 L 280 140 L 400 140 L 400 170 L 280 170 C 260 210 140 210 120 170 L 0 170 Z"
+                  fill="#f5e0c5"
+                  stroke="#ca8a04"
                   strokeWidth="2"
                 />
-                <circle cx={`${hs.x}%`} cy={`${hs.y}%`} r="12" className="stroke-white/40 fill-none animate-ping" style={{ animationDuration: "3s" }} />
-              </g>
-            ))}
-          </svg>
+                <text x="15" y="158" className="fill-slate-600 font-extrabold text-[9px] font-bold">Kerak (Sial/Sima)</text>
+                <text x="175" y="195" className="fill-amber-800 text-[9px] font-black uppercase">Akar Gunung (Awtad)</text>
+              </svg>
+            </div>
+
+            {/* Custom high-res overlay from user uploaded/created file "pasakpasak.png" */}
+            <img 
+              src={pasakpasak}
+              className="absolute inset-0 w-full h-full object-cover pointer-events-none transition-all duration-700 group-hover:scale-[1.015]"
+              referrerPolicy="no-referrer"
+              alt="Anatomi Pasak Gunung"
+              onError={(e) => {
+                // Keep the underlying vector vector visible
+                e.currentTarget.style.display = "none";
+              }}
+            />
+
+            {/* Absolute positioned interactive hotspots so they align perfectly over BOTH image and SVG */}
+            <div className="absolute inset-0">
+              {lesson.sains.hotspots?.map((hs) => (
+                <button
+                  key={hs.id}
+                  onClick={() => setSelectedHotspot(hs)}
+                  style={{ left: `${hs.x}%`, top: `${hs.y}%` }}
+                  className="absolute -translate-x-1/2 -translate-y-1/2 group/btn cursor-pointer z-10 outline-none"
+                >
+                  <span className="relative flex h-6 w-6 items-center justify-center">
+                    <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${
+                      selectedHotspot?.id === hs.id ? "bg-amber-400" : "bg-sky-400"
+                    }`}></span>
+                    <span className={`relative inline-flex rounded-full h-3.5 w-3.5 border-2 border-white shadow-md transition-colors duration-200 ${
+                      selectedHotspot?.id === hs.id ? "bg-amber-400" : "bg-sky-500 group-hover/btn:bg-amber-400"
+                    }`}></span>
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
         );
       case "volcano":
         return (
@@ -585,7 +719,7 @@ export default function MateriPage({
                         Sains Isostasi & Geofisika IPA
                       </span>
                       <p className="text-xs md:text-sm font-extrabold text-white tracking-wide leading-snug drop-shadow-sm">
-                        Secara Sains IPA (Fisika), gunung menancap bagai pasak (pegs) dengan akar yang menjunam sangat dalam ke mantel bumi untuk menyeimbangkan berat jenis kerak bumi.
+                        Secara Sains, gunung menancap bagai pasak dengan akar yang menjunam sangat dalam ke mantel bumi untuk menyeimbangkan berat jenis kerak bumi.
                       </p>
                     </div>
                   </div>
@@ -846,15 +980,16 @@ export default function MateriPage({
 
                       {/* MICRO AUDIO RECITATION ENGINE */}
                       <div className="flex items-center gap-3 w-1/2 justify-end">
+                        <span className="text-[9px] font-medium text-slate-400 font-mono hidden sm:inline">Qari: Al-Afasy</span>
                         {isPlaying && (
                           <div className="flex gap-0.5 items-end justify-center h-4 w-6 shrink-0">
-                            <span className="w-0.7 h-3 bg-emerald-500 animate-bounce" style={{ animationDelay: "0.1s" }} />
-                            <span className="w-0.7 h-4 bg-emerald-500 animate-bounce" style={{ animationDelay: "0.3s" }} />
-                            <span className="w-0.7 h-2 bg-emerald-500 animate-bounce" style={{ animationDelay: "0.2s" }} />
+                            <span className="w-[3px] h-3 bg-emerald-500 animate-bounce" style={{ animationDelay: "0.1s" }} />
+                            <span className="w-[3px] h-4 bg-emerald-500 animate-bounce" style={{ animationDelay: "0.3s" }} />
+                            <span className="w-[3px] h-2 bg-emerald-500 animate-bounce" style={{ animationDelay: "0.2s" }} />
                           </div>
                         )}
                         <button
-                          onClick={() => handlePlayQuranAudio(verseKey, v.arabic)}
+                          onClick={() => handlePlayQuranAudio(verseKey, v.arabic, v.surah, v.verse)}
                           className="w-10 h-10 rounded-full bg-emerald-500 text-white flex items-center justify-center hover:bg-emerald-600 active:scale-90 transition-all shrink-0 cursor-pointer shadow-md shadow-emerald-500/20"
                           title="Lafalkan Ayat"
                         >
@@ -862,6 +997,16 @@ export default function MateriPage({
                         </button>
                       </div>
                     </div>
+
+                    {/* Seekable/visual Progress Bar */}
+                    {progressWidth > 0 && (
+                      <div className="-mt-1 w-full bg-emerald-50 h-1.5 rounded-full overflow-hidden border border-emerald-100">
+                        <div 
+                          className="bg-gradient-to-r from-emerald-400 to-emerald-600 h-full transition-all duration-100 ease-out rounded-full" 
+                          style={{ width: `${progressWidth}%` }}
+                        />
+                      </div>
+                    )}
 
                     {/* Arabic Text Display */}
                     <div className="text-right font-serif text-2xl sm:text-3xl font-black text-emerald-900 leading-loose py-3 tracking-wide filter drop-shadow-sm select-text">

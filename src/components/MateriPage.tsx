@@ -21,6 +21,8 @@ import {
   Network
 } from "lucide-react";
 import { LessonContent, StudentProfile, QuranVerse, Hotspot, MatchingPair } from "../types";
+// @ts-ignore
+import sumberkesuburan from "../sumberkesuburan.png";
 
 interface MateriPageProps {
   lesson: LessonContent;
@@ -460,6 +462,146 @@ export default function MateriPage({
                   "{lesson.pemantik.question}"
                 </h3>
               </div>
+
+              {lesson.id === "materi_subur" && (
+                <div className="w-full max-w-2xl md:max-w-3xl lg:max-w-4xl mx-auto overflow-hidden rounded-3xl border border-slate-200/95 bg-white p-3 shadow-md hover:shadow-xl transition-all duration-300">
+                  <div className="relative aspect-[16/10] md:aspect-[16/9] rounded-2xl bg-gradient-to-b from-indigo-50/50 via-emerald-50/20 to-slate-50 overflow-hidden group border border-slate-100">
+                    
+                    {/* Stylized Interactive SVG Schematic Schema for Volcanic Fertility (Fallback / Background) */}
+                    <div className="absolute inset-0 pointer-events-none opacity-90 select-none">
+                      <svg className="w-full h-full" viewBox="0 0 800 450" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        {/* sky background */}
+                        <rect width="800" height="450" fill="url(#skyGradient)" />
+                        
+                        {/* Sun/Glow */}
+                        <circle cx="680" cy="90" r="45" fill="url(#sunGlow)" className="animate-pulse" />
+                        
+                        {/* Back Mountains silhouettes */}
+                        <path d="M100 450 L350 200 L480 320 L680 180 L850 450 Z" fill="#cbd5e1" opacity="0.35" />
+                        
+                        {/* Main Volcano (Gunung Pusuk Buhit / Vulkanik) */}
+                        <path d="M180 450 L400 130 L450 130 L680 450 Z" fill="url(#volcanoGrad)" />
+                        
+                        {/* Volcano Crater (Kawah & Magma) */}
+                        <path d="M400 130 C410 145, 440 145, 450 130 Z" fill="#f43f5e" />
+                        <path d="M420 130 L425 250 L435 250 L430 130 Z" fill="url(#magmaChamber)" />
+                        <circle cx="425" cy="280" r="40" fill="url(#magmaSource)" />
+                        
+                        {/* Earthlayers and Roots of Mountain (Sains Isostasi & Pasak Bumi) */}
+                        <rect x="0" y="380" width="800" height="70" fill="url(#earthLayers)" />
+                        
+                        {/* Roots of Mountain stretching deep into Asthenosphere */}
+                        <path d="M300 380 L410 445 L450 445 L580 380 Z" fill="#334155" opacity="0.9" />
+                        {/* Isostasi arrows indicating pressure balance */}
+                        <path d="M425 435 L425 405" stroke="#38bdf8" strokeWidth="3" markerEnd="url(#arrow)" />
+                        <path d="M435 405 L435 435" stroke="#f43f5e" strokeWidth="3" markerEnd="url(#arrow)" />
+                        
+                        {/* Erupting Ash & Mineral clouds */}
+                        <circle cx="425" cy="110" r="30" fill="url(#ashCloud)" opacity="0.75" />
+                        <circle cx="465" cy="100" r="25" fill="url(#ashCloud)" opacity="0.65" />
+                        <circle cx="385" cy="105" r="22" fill="url(#ashCloud)" opacity="0.65" />
+                        
+                        {/* Micro Nutrients floating down */}
+                        <g opacity="0.8">
+                          <circle cx="340" cy="160" r="5" fill="#10b981" />
+                          <text x="350" y="164" fill="#047857" fontSize="11" fontWeight="bold">Silika (SiO₂)</text>
+                          
+                          <circle cx="510" cy="180" r="5" fill="#f59e0b" />
+                          <text x="520" y="184" fill="#b45309" fontSize="11" fontWeight="bold">Kalium (K)</text>
+                          
+                          <circle cx="310" cy="240" r="5" fill="#3b82f6" />
+                          <text x="320" y="244" fill="#1d4ed8" fontSize="11" fontWeight="bold">Kalsium (Ca)</text>
+
+                          <circle cx="560" cy="250" r="5" fill="#ec4899" />
+                          <text x="570" y="254" fill="#be185d" fontSize="11" fontWeight="bold">Fosfor (P)</text>
+                        </g>
+
+                        {/* Plantations / Terraces near Lake Toba */}
+                        <path d="M0 410 Q80 405 180 410 Q300 415 420 410 L450 450 L0 450 Z" fill="#059669" opacity="0.7" />
+                        <path d="M0 430 Q120 420 280 430 Q450 435 800 425 L800 450 L0 450 Z" fill="#047857" />
+                        
+                        {/* Water Body (Danau Toba) on the right */}
+                        <path d="M580 380 Q660 385 800 380 L800 450 L580 450 Z" fill="url(#lakeTobaGrad)" />
+                        
+                        {/* Labels */}
+                        <rect x="25" y="25" width="160" height="75" rx="10" fill="#ffffff" fillOpacity="0.85" stroke="#e2e8f0" strokeWidth="1.5" />
+                        <text x="35" y="45" fill="#1e293b" fontSize="10" fontWeight="900">SAINS VULKANOLOGI IPA</text>
+                        <text x="35" y="60" fill="#475569" fontSize="9" fontWeight="bold">• Pelapukan Abu Vulkanik</text>
+                        <text x="35" y="73" fill="#475569" fontSize="9" fontWeight="bold">• Unsur Hara Makro Alami</text>
+                        <text x="35" y="86" fill="#475569" fontSize="9" fontWeight="bold">• Keseimbangan Isostasi</text>
+
+                        <text x="610" y="415" fill="#ffffff" fontSize="9" fontWeight="bold" opacity="0.9">Danau Toba</text>
+                        <text x="100" y="440" fill="#ffffff" fontSize="9" fontWeight="bold" opacity="0.9">Sawah Subur Batak Toba</text>
+                        <text x="405" y="365" fill="#cbd5e1" fontSize="9" fontWeight="bold" letterSpacing="1">KERAK BUMI</text>
+
+                        {/* Defs for gradients */}
+                        <defs>
+                          <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="currentColor" />
+                          </marker>
+                          <linearGradient id="skyGradient" x1="400" y1="0" x2="400" y2="450" gradientUnits="userSpaceOnUse">
+                            <stop offset="0" stopColor="#e0f2fe" />
+                            <stop offset="0.6" stopColor="#f0f9ff" />
+                            <stop offset="1" stopColor="#f8fafc" />
+                          </linearGradient>
+                          <linearGradient id="sunGlow" x1="680" y1="45" x2="680" y2="135" gradientUnits="userSpaceOnUse">
+                            <stop offset="0" stopColor="#fef08a" stopOpacity="0.6" />
+                            <stop offset="1" stopColor="#fef08a" stopOpacity="0" />
+                          </linearGradient>
+                          <linearGradient id="volcanoGrad" x1="430" y1="130" x2="430" y2="450" gradientUnits="userSpaceOnUse">
+                            <stop offset="0" stopColor="#475569" />
+                            <stop offset="1" stopColor="#1e293b" />
+                          </linearGradient>
+                          <linearGradient id="magmaChamber" x1="427" y1="130" x2="427" y2="250" gradientUnits="userSpaceOnUse">
+                            <stop offset="0" stopColor="#f43f5e" />
+                            <stop offset="1" stopColor="#dc2626" />
+                          </linearGradient>
+                          <radialGradient id="magmaSource" cx="30%" cy="30%" r="70%">
+                            <stop offset="0%" stopColor="#fda4af" />
+                            <stop offset="60%" stopColor="#f43f5e" />
+                            <stop offset="100%" stopColor="#991b1b" />
+                          </radialGradient>
+                          <linearGradient id="earthLayers" x1="400" y1="380" x2="400" y2="450" gradientUnits="userSpaceOnUse">
+                            <stop offset="0" stopColor="#0f172a" />
+                            <stop offset="1" stopColor="#020617" />
+                          </linearGradient>
+                          <radialGradient id="ashCloud" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" stopColor="#94a3b8" />
+                            <stop offset="80%" stopColor="#cbd5e1" stopOpacity="0.8" />
+                            <stop offset="100%" stopColor="#cbd5e1" stopOpacity="0" />
+                          </radialGradient>
+                          <linearGradient id="lakeTobaGrad" x1="690" y1="380" x2="690" y2="450" gradientUnits="userSpaceOnUse">
+                            <stop offset="0" stopColor="#0284c7" />
+                            <stop offset="1" stopColor="#0369a1" />
+                          </linearGradient>
+                        </defs>
+                      </svg>
+                    </div>
+
+                    {/* Premium Image element that overlays beautifully when high-resolution image is supplied */}
+                    <img
+                      src={sumberkesuburan}
+                      className="absolute inset-0 w-full h-full object-cover transition-all duration-700 pointer-events-none group-hover:scale-[1.015]"
+                      referrerPolicy="no-referrer"
+                      alt="Gunung Sebagai Sumber Kesuburan"
+                      onError={(e) => {
+                        // Keep image hidden and prioritize beautiful SVG schematic fallback if empty/broken
+                        e.currentTarget.style.display = "none";
+                      }}
+                    />
+
+                    {/* Info Overlay Panel */}
+                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-slate-950/80 via-slate-900/45 to-transparent p-4 md:p-6 flex flex-col justify-end z-10 pointer-events-none">
+                      <span className="self-start text-[9px] md:text-[10px] font-black text-amber-300 bg-amber-950/50 backdrop-blur-md px-3 py-1 rounded-lg uppercase tracking-wider mb-2 border border-amber-500/20 shadow-xs">
+                        Sains Vulkanologi & Isostasi IPA
+                      </span>
+                      <p className="text-xs md:text-sm font-extrabold text-white tracking-wide leading-snug drop-shadow-sm">
+                        Kandungan abu vulkanik purba menyuburkan tanah pertanian rakyat sekeliling Danau Toba dengan rilis mineral hara makro secara terus-menerus.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               <div className="p-6 rounded-3xl bg-white border border-slate-200/80 leading-relaxed font-sans text-xs text-slate-600 shadow-sm">
                 <p>{lesson.pemantik.text}</p>

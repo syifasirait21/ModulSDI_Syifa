@@ -150,16 +150,7 @@ const DEFAULT_USERS = [
   }
 ];
 
-const DEFAULT_ASSIGNMENTS: Assignment[] = [
-  {
-    id: "task_1",
-    title: "Dinamika Lempeng Tektonik Toba",
-    instruction: "Lakukan eksplorasi di modul 'Gunung Dinamis (Lempeng & Vulkanisme)' hingga mendapat progres tuntas, lalu coba Evaluasi Akhirnya.",
-    lessonId: "materi_dinamis",
-    points: 50,
-    createdAt: new Date().toISOString()
-  }
-];
+const DEFAULT_ASSIGNMENTS: Assignment[] = [];
 
 // Initializing WebAudio API synthesized ambient soundscape
 let audioCtx: AudioContext | null = null;

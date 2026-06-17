@@ -66,7 +66,14 @@ export interface LessonContent {
   };
   eksplorasi: {
     text: string;
-    points: { title: string; desc: string }[];
+    points: { 
+      title: string; 
+      desc: string;
+      subtitle?: string;
+      factBubble?: string;
+      analogyText?: string;
+      reflectionText?: string;
+    }[];
   };
   sains: {
     title: string;

@@ -13,6 +13,7 @@ import {
   Pause,
   AlertCircle,
   HelpCircle,
+  Lightbulb,
   Clock,
   Compass,
   Smile,
@@ -27,6 +28,8 @@ import sumberkesuburan from "../sumberkesuburan.png";
 import gunungpasak from "../gunungpasak.png";
 // @ts-ignore
 import pasakpasak from "../pasakpasak.png";
+// @ts-ignore
+import gunungdinamis from "../gunungdinamis.png";
 
 interface MateriPageProps {
   lesson: LessonContent;
@@ -363,7 +366,7 @@ export default function MateriPage({
     switch (lesson.sains.diagramType) {
       case "isostasy":
         return (
-          <div className="relative w-full aspect-[16/10] md:aspect-[16/9] rounded-2xl bg-gradient-to-b from-sky-50 via-indigo-50/25 to-slate-50 overflow-hidden border border-slate-200 shadow-sm group">
+          <div className="relative w-full aspect-[5/3] rounded-2xl bg-gradient-to-b from-sky-50 via-indigo-50/25 to-slate-50 overflow-hidden border border-slate-200 shadow-sm group">
             {/* SVG drawing as the underlying schematic schema */}
             <div className="absolute inset-0 select-none opacity-90">
               <svg viewBox="0 0 400 240" className="w-full h-full" fill="none" stroke="currentColor">
@@ -433,49 +436,107 @@ export default function MateriPage({
         );
       case "volcano":
         return (
-          <svg viewBox="0 0 400 240" className="w-full bg-slate-50 rounded-2xl border border-slate-200" fill="none" stroke="currentColor">
-            <defs>
-              <linearGradient id="volcanoSky" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#bae6fd" />
-                <stop offset="100%" stopColor="#f0f9ff" />
-              </linearGradient>
-            </defs>
-            <rect width="400" height="240" fill="url(#volcanoSky)" />
+          <div className="relative w-full aspect-[5/3] rounded-2xl bg-gradient-to-b from-sky-50 via-indigo-50/25 to-slate-50 overflow-hidden border border-slate-200 shadow-sm group">
+            {/* SVG drawing as the underlying schematic schema */}
+            <div className="absolute inset-0 select-none opacity-90">
+              <svg viewBox="0 0 400 240" className="w-full h-full" fill="none" stroke="currentColor">
+                <defs>
+                  <linearGradient id="volcanoSky" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#bae6fd" />
+                    <stop offset="100%" stopColor="#e0f2fe" />
+                  </linearGradient>
+                  <linearGradient id="magmaChamber" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#fb7185" />
+                    <stop offset="30%" stopColor="#f43f5e" />
+                    <stop offset="100%" stopColor="#be123c" />
+                  </linearGradient>
+                  <linearGradient id="lakeToba" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#38bdf8" />
+                    <stop offset="100%" stopColor="#0284c7" />
+                  </linearGradient>
+                  <linearGradient id="crustLayer" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#94a3b8" />
+                    <stop offset="100%" stopColor="#475569" />
+                  </linearGradient>
+                </defs>
+                <rect width="400" height="240" fill="url(#volcanoSky)" />
 
-            {/* Volcano crust */}
-            <path d="M 0 240 L 120 180 L 170 110 L 200 125 L 230 110 L 270 180 L 400 240 Z" fill="#cbd5e1" stroke="#ca8a04" strokeWidth="1" />
+                {/* Ground layer */}
+                <rect x="0" y="210" width="400" height="30" fill="#334155" stroke="none" />
 
-            {/* Magma chamber & conduit */}
-            <ellipse cx="200" cy="210" rx="35" ry="20" fill="#ef4444" stroke="#b91c1c" strokeWidth="1.5" />
-            <path d="M 190 210 L 195 120 L 205 120 L 210 210 Z" fill="#f97316" stroke="#ea580c" strokeWidth="1" />
-
-            {/* Smoke and lava flow */}
-            <circle cx="200" cy="85" r="22" fill="#94a3b8" opacity="0.3" />
-            <circle cx="180" cy="70" r="15" fill="#cbd5e1" opacity="0.2" />
-            <path d="M 200 120 Q 220 140 240 170" stroke="#f97316" strokeWidth="3" strokeLinecap="round" />
-
-            {/* Hotspots clickable */}
-            {lesson.sains.hotspots?.map((hs) => (
-              <g
-                key={hs.id}
-                className="cursor-pointer"
-                onClick={() => setSelectedHotspot(hs)}
-              >
-                <circle
-                  cx={`${hs.x}%`}
-                  cy={`${hs.y}%`}
-                  r="7"
-                  className={`${
-                    selectedHotspot?.id === hs.id
-                      ? "fill-amber-400 stroke-white text-orange-500 animate-pulse"
-                      : "fill-orange-500 stroke-slate-900"
-                  }`}
-                  strokeWidth="2"
+                {/* Volcano crust */}
+                <path
+                  d="M 0 240 L 0 220 L 130 75 L 150 90 Q 200 135 250 90 L 270 75 L 400 220 L 400 240 Z"
+                  fill="url(#crustLayer)"
+                  stroke="#334155"
+                  strokeWidth="1.5"
                 />
-                <circle cx={`${hs.x}%`} cy={`${hs.y}%`} r="12" className="stroke-orange-400/30 fill-none animate-ping" style={{ animationDuration: "2.5s" }} />
-              </g>
-            ))}
-          </svg>
+
+                {/* Geological Sesar Sumatra Line */}
+                <line x1="120" y1="240" x2="160" y2="75" stroke="#f43f5e" strokeWidth="1" strokeDasharray="3 3" opacity="0.6" />
+                <line x1="280" y1="240" x2="240" y2="75" stroke="#f43f5e" strokeWidth="1" strokeDasharray="3 3" opacity="0.6" />
+
+                {/* Caldera Lake (Danau Toba) */}
+                <path
+                  d="M 148 91 Q 200 135 252 91 Z"
+                  fill="url(#lakeToba)"
+                  stroke="#0284c7"
+                  strokeWidth="1.5"
+                />
+
+                {/* Lake Water Surface Ripple lines */}
+                <path d="M 175 100 Q 200 102 225 100" stroke="#bae6fd" strokeWidth="1" opacity="0.8" />
+                <path d="M 188 107 Q 200 109 212 107" stroke="#bae6fd" strokeWidth="1" opacity="0.8" />
+
+                {/* Magma Conduit (Vertical Volcanic Vent) */}
+                <path d="M 194 115 L 195 180 L 205 180 L 206 115 Z" fill="url(#magmaChamber)" stroke="#9f1239" strokeWidth="1" />
+
+                {/* Magma Chamber (Dapur Magma) */}
+                <ellipse cx="200" cy="180" rx="32" ry="18" fill="url(#magmaChamber)" stroke="#9f1239" strokeWidth="1.5" />
+
+                {/* Lava flow lines inside chamber */}
+                <path d="M 185 180 Q 200 185 215 180" stroke="#fecdd3" strokeWidth="1" opacity="0.5" />
+
+                {/* Labels */}
+                <text x="171" y="82" className="fill-sky-800 text-[8px] font-sans font-black uppercase tracking-widest bg-white/20 backdrop-blur-xs select-none">Danau Toba</text>
+                <text x="212" y="145" className="fill-rose-700 text-[7px] font-sans font-black uppercase tracking-wider select-none">Pipa Vent</text>
+                <text x="163" y="183" className="fill-rose-100 text-[7px] font-sans font-black uppercase tracking-wider select-none">Dapur Magma</text>
+              </svg>
+            </div>
+
+            {/* Custom high-res overlay from user uploaded/created file "gunungdinamis.png" */}
+            <img
+              src={gunungdinamis}
+              className="absolute inset-0 w-full h-full object-cover pointer-events-none transition-all duration-700 group-hover:scale-[1.015]"
+              referrerPolicy="no-referrer"
+              alt="Anatomi Gunung Dinamis"
+              onError={(e) => {
+                // Keep the underlying vector visible if empty/broken
+                e.currentTarget.style.display = "none";
+              }}
+            />
+
+            {/* Absolute positioned interactive hotspots so they align perfectly over BOTH image and SVG */}
+            <div className="absolute inset-0">
+              {lesson.sains.hotspots?.map((hs) => (
+                <button
+                  key={hs.id}
+                  onClick={() => setSelectedHotspot(hs)}
+                  style={{ left: `${hs.x}%`, top: `${hs.y}%` }}
+                  className="absolute -translate-x-1/2 -translate-y-1/2 group/btn cursor-pointer z-10 outline-none"
+                >
+                  <span className="relative flex h-6 w-6 items-center justify-center">
+                    <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${
+                      selectedHotspot?.id === hs.id ? "bg-amber-400" : "bg-orange-400"
+                    }`}></span>
+                    <span className={`relative inline-flex rounded-full h-3.5 w-3.5 border-2 border-white shadow-md transition-colors duration-200 ${
+                      selectedHotspot?.id === hs.id ? "bg-amber-400" : "bg-orange-500 group-hover/btn:bg-amber-400"
+                    }`}></span>
+                  </span>
+                </button>
+              ))}
+            </div>
+          </div>
         );
       case "hydrology":
         return (
@@ -878,25 +939,72 @@ export default function MateriPage({
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0 }}
-              className="space-y-5"
+              className="space-y-6"
             >
-              <p className="text-xs text-slate-600 leading-relaxed font-sans">{lesson.eksplorasi.text}</p>
+              <div className="p-5 md:p-6 rounded-3xl bg-amber-50/40 border border-amber-100/50 text-[13px] md:text-sm font-medium text-slate-700 leading-relaxed font-sans shadow-xs">
+                {lesson.eksplorasi.text}
+              </div>
 
-              <div className="space-y-4">
+              <div className="space-y-5">
                 {lesson.eksplorasi.points.map((point, i) => (
                   <motion.div
                     key={point.title}
                     initial={{ opacity: 0, y: 15 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: i * 0.15 }}
-                    className="p-4 rounded-2xl bg-white border border-slate-200/80 shadow-sm flex gap-3"
+                    className="p-5 md:p-6 rounded-3xl bg-white border border-slate-200/80 shadow-sm flex flex-col sm:flex-row gap-4 items-start"
                   >
-                    <span className="w-7 h-7 rounded-full bg-amber-400 text-slate-950 flex items-center justify-center font-black text-xs shrink-0 mt-0.5 shadow-sm">
+                    <span className="w-8 h-8 rounded-full bg-amber-400 text-slate-950 flex items-center justify-center font-black text-sm shrink-0 shadow-md shadow-amber-400/20">
                       {i + 1}
                     </span>
-                    <div>
-                      <h4 className="text-sm font-black text-slate-800 tracking-wide">{point.title}</h4>
-                      <p className="text-[11px] text-slate-600 leading-relaxed mt-1">{point.desc}</p>
+                    <div className="flex-1 w-full space-y-3">
+                      <div>
+                        <h4 className="text-xs font-black text-amber-800 uppercase tracking-widest">{point.title}</h4>
+                        {point.subtitle && (
+                          <h5 className="text-sm font-black text-slate-800 mt-1 leading-snug">{point.subtitle}</h5>
+                        )}
+                      </div>
+
+                      <div className="text-[11px] md:text-xs text-slate-600 leading-relaxed font-sans space-y-2.5">
+                        {point.desc.split('\n\n').map((paragraph, pIdx) => (
+                          <p key={pIdx} className="font-medium text-slate-600">{paragraph}</p>
+                        ))}
+                      </div>
+
+                      {/* Fact Bubble Option ("Tahukah Kamu?") */}
+                      {point.factBubble && (
+                        <div className="p-4 rounded-2xl bg-amber-50/55 border border-amber-100 flex gap-3 items-start shadow-xs">
+                          <Lightbulb className="w-4 h-4 text-amber-500 shrink-0 mt-0.5 animate-pulse" />
+                          <div className="text-[10.5px] md:text-[11px] font-medium leading-relaxed font-sans text-slate-700">
+                            <strong className="text-amber-850 font-bold block mb-0.5">Tahukah Kamu?</strong>
+                            {point.factBubble}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Analogy Option */}
+                      {point.analogyText && (
+                        <div className="p-4 rounded-2xl bg-indigo-50/50 border border-indigo-100/80 flex gap-3 items-start shadow-xs">
+                          <Sparkles className="w-4 h-4 text-indigo-500 shrink-0 mt-0.5" />
+                          <div className="text-[10.5px] md:text-[11px] font-medium leading-relaxed font-sans text-slate-700">
+                            <strong className="text-indigo-850 font-bold block mb-1">Analogi Sederhana</strong>
+                            {point.analogyText.split('\n\n').map((paragraph, index) => (
+                              <p key={index} className={index > 0 ? "mt-1.5" : ""}>{paragraph}</p>
+                            ))}
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Reflection Option */}
+                      {point.reflectionText && (
+                        <div className="p-4 rounded-2xl bg-emerald-50/40 border border-emerald-100 flex gap-3 items-start shadow-xs">
+                          <HelpCircle className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
+                          <div className="text-[10.5px] md:text-[11px] font-medium leading-relaxed font-sans text-slate-700">
+                            <strong className="text-emerald-850 font-bold block mb-0.5">Refleksi</strong>
+                            {point.reflectionText}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   </motion.div>
                 ))}
@@ -1048,9 +1156,11 @@ export default function MateriPage({
                 );
               })}
 
-              <div className="p-5 rounded-2xl bg-emerald-50/70 border border-emerald-200 text-[11px] text-slate-600 leading-relaxed font-sans shadow-inner">
-                <strong className="text-emerald-700 block text-xs mb-1">Kandungan Hikmah:</strong>
-                {lesson.quran.hikmah}
+              <div className="p-5 rounded-2xl bg-emerald-50/70 border border-emerald-200 text-[11px] text-slate-600 leading-relaxed font-sans shadow-inner space-y-2.5">
+                <strong className="text-emerald-700 block text-xs">Kandungan Hikmah:</strong>
+                {lesson.quran.hikmah.split('\n\n').map((para, pidx) => (
+                  <p key={pidx}>{para}</p>
+                ))}
               </div>
             </motion.div>
           )}
@@ -1065,14 +1175,20 @@ export default function MateriPage({
             >
               <div className="p-5 rounded-2xl bg-amber-50 border border-amber-200">
                 <span className="text-[9px] font-black text-amber-700 uppercase tracking-widest block mb-1">Sumber Perspektif Budaya Toba</span>
-                <h4 className="text-sm font-black text-amber-900">{lesson.etnosains.origin}</h4>
-                <p className="text-xs text-slate-600 leading-relaxed mt-2.5 font-sans">{lesson.etnosains.narrative}</p>
+                <h4 className="text-sm font-black text-amber-900 leading-snug whitespace-pre-line">{lesson.etnosains.origin}</h4>
+                <div className="text-xs text-slate-600 leading-relaxed mt-2.5 font-sans space-y-2.5">
+                  {lesson.etnosains.narrative.split('\n\n').map((para, pidx) => (
+                    <p key={pidx}>{para}</p>
+                  ))}
+                </div>
                 {lesson.etnosains.ipaConnection && (
-                  <div className="mt-3.5 p-4 rounded-xl bg-sky-50 border border-sky-100 text-[11px] leading-relaxed text-slate-700 font-sans shadow-xs">
-                    <strong className="text-sky-800 flex items-center gap-1.5 text-xs mb-1.5 font-bold uppercase tracking-wider">
+                  <div className="mt-3.5 p-4 rounded-xl bg-sky-50 border border-sky-100 text-[11px] leading-relaxed text-slate-700 font-sans shadow-xs space-y-1.5">
+                    <strong className="text-sky-800 flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider">
                       <Activity className="w-3.5 h-3.5 animate-pulse text-sky-600" /> Keterkaitan dengan IPA
                     </strong>
-                    <p className="font-medium text-slate-700">{lesson.etnosains.ipaConnection}</p>
+                    {lesson.etnosains.ipaConnection.split('\n\n').map((para, pidx) => (
+                      <p key={pidx} className="font-medium text-slate-700">{para}</p>
+                    ))}
                   </div>
                 )}
               </div>
@@ -1085,15 +1201,21 @@ export default function MateriPage({
                     <div className="w-9 h-9 rounded-full bg-amber-50 border border-amber-200 text-amber-500 flex items-center justify-center shrink-0">
                       <Sparkles className="w-4 h-4" />
                     </div>
-                    <div className="flex-1">
-                      <h4 className="text-xs font-black text-slate-800 uppercase tracking-wider">{pr.title}</h4>
-                      <p className="text-[11px] text-slate-600 leading-relaxed mt-1 font-sans">{pr.desc}</p>
+                    <div className="flex-1 w-full">
+                      <h4 className="text-xs font-black text-slate-800 uppercase tracking-wider whitespace-pre-line leading-snug">{pr.title}</h4>
+                      <div className="text-[11px] text-slate-600 leading-relaxed mt-1 font-sans space-y-2">
+                        {pr.desc.split('\n\n').map((para, pidx) => (
+                          <p key={pidx}>{para}</p>
+                        ))}
+                      </div>
                       {pr.ipaConnection && (
-                        <div className="mt-3 p-3.5 rounded-xl bg-amber-50/60 border border-amber-100 text-[10.5px] leading-relaxed text-slate-700 font-sans shadow-xs">
-                          <strong className="text-amber-800 flex items-center gap-1.5 text-[11px] mb-1 font-bold uppercase tracking-wider">
+                        <div className="mt-3 p-3.5 rounded-xl bg-amber-50/60 border border-amber-100 text-[10.5px] leading-relaxed text-slate-700 font-sans shadow-xs space-y-1.5">
+                          <strong className="text-amber-800 flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-wider">
                             <Activity className="w-3 h-3 animate-pulse text-amber-600" /> Keterkaitan dengan IPA
                           </strong>
-                          <p className="font-medium text-slate-700">{pr.ipaConnection}</p>
+                          {pr.ipaConnection.split('\n\n').map((para, pidx) => (
+                            <p key={pidx} className="font-medium text-slate-700">{para}</p>
+                          ))}
                         </div>
                       )}
                     </div>

@@ -23,7 +23,15 @@ import {
 } from "lucide-react";
 
 import { StudentProfile, LessonContent, Badge } from "./types";
-import { LESSONS_DATA, BADGES_DATA } from "./data";
+import { LESSONS_DATA as ALL_LESSONS, BADGES_DATA as ALL_BADGES } from "./data";
+
+const LESSONS_DATA = ALL_LESSONS.filter(l => l.id === "materi_pasak" || l.id === "materi_dinamis");
+const BADGES_DATA = ALL_BADGES.filter(b => 
+  b.id === "badge_start" || 
+  b.id === "badge_pasak" || 
+  b.id === "badge_dinamis" || 
+  b.id === "badge_conqueror"
+);
 
 import Splashscreen from "./components/Splashscreen";
 import Dashboard from "./components/Dashboard";
@@ -145,9 +153,9 @@ const DEFAULT_USERS = [
 const DEFAULT_ASSIGNMENTS: Assignment[] = [
   {
     id: "task_1",
-    title: "Kemurnian Air Pegunungan Toba",
-    instruction: "Lakukan eksplorasi di modul 'Gunung sebagai Tandon Air Raksasa' hingga mendapat progres tuntas, lalu coba Evaluasi Akhirnya.",
-    lessonId: "materi_air",
+    title: "Dinamika Lempeng Tektonik Toba",
+    instruction: "Lakukan eksplorasi di modul 'Gunung Dinamis (Lempeng & Vulkanisme)' hingga mendapat progres tuntas, lalu coba Evaluasi Akhirnya.",
+    lessonId: "materi_dinamis",
     points: 50,
     createdAt: new Date().toISOString()
   }

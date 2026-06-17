@@ -21,7 +21,6 @@ import {
   BookOpenCheck
 } from "lucide-react";
 import { LessonContent, StudentProfile, Badge } from "../types";
-import { LESSONS_DATA } from "../data";
 
 interface Assignment {
   id: string;

@@ -128,6 +128,7 @@ export default function TeacherDashboard({
   const [taskLessonId, setTaskLessonId] = useState(lessons[0]?.id || "");
   const [taskPoints, setTaskPoints] = useState(50);
   const [formSuccess, setFormSuccess] = useState(false);
+  const [formError, setFormError] = useState("");
 
   // Stats calculators
   const totalStudents = students.length;
@@ -147,8 +148,9 @@ export default function TeacherDashboard({
 
   const handlePostTaskSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setFormError("");
     if (!taskTitle || !taskInstruction) {
-      alert("Mohon isi judul dan instruksi tugas!");
+      setFormError("Mohon isi judul dan instruksi tugas!");
       return;
     }
 
@@ -512,6 +514,12 @@ export default function TeacherDashboard({
               {formSuccess && (
                 <div className="text-[11px] text-emerald-700 font-bold bg-emerald-50 border border-emerald-250 px-3 py-1.5 rounded-lg shadow-inner animate-pulse">
                   Tugas berhasil diposting & disebarkan ke siswa!
+                </div>
+              )}
+
+              {formError && (
+                <div className="text-[11px] text-rose-700 font-bold bg-rose-50 border border-rose-250 px-3 py-1.5 rounded-lg shadow-inner">
+                  {formError}
                 </div>
               )}
 

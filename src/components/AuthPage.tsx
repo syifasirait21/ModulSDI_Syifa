@@ -33,6 +33,7 @@ export default function AuthPage({ onLoginSuccess, allUsers, onRegisterUser }: A
   const [regPassword, setRegPassword] = useState("");
   const [regAvatar, setRegAvatar] = useState("");
   const [regSuccess, setRegSuccess] = useState(false);
+  const [regError, setRegError] = useState("");
 
   // Login States
   const [loginUsername, setLoginUsername] = useState("");
@@ -48,6 +49,7 @@ export default function AuthPage({ onLoginSuccess, allUsers, onRegisterUser }: A
     setActivePortal(portal);
     setIsLogin(true);
     setLoginError("");
+    setRegError("");
     setRegSuccess(false);
     setRegName("");
     setRegUsername("");
@@ -59,6 +61,7 @@ export default function AuthPage({ onLoginSuccess, allUsers, onRegisterUser }: A
   const handleGoBack = () => {
     setActivePortal(null);
     setLoginError("");
+    setRegError("");
   };
 
   const handleLoginSubmit = (e: React.FormEvent) => {
@@ -99,8 +102,14 @@ export default function AuthPage({ onLoginSuccess, allUsers, onRegisterUser }: A
 
   const handleRegisterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setRegError("");
     if (!regName || !regUsername || !regPassword) {
-      alert("Mohon lengkapi semua bidang isian!");
+      setRegError("Mohon lengkapi semua bidang isian!");
+      return;
+    }
+
+    if (regPassword.length < 3) {
+      setRegError("Kata sandi minimal 3 karakter!");
       return;
     }
 
@@ -108,7 +117,7 @@ export default function AuthPage({ onLoginSuccess, allUsers, onRegisterUser }: A
       (u) => u.username.toLowerCase() === regUsername.toLowerCase().trim()
     );
     if (alreadyExist) {
-      alert("Nama pengguna (username) sudah terdaftar!");
+      setRegError("Nama pengguna (username) sudah terdaftar!");
       return;
     }
 
@@ -124,12 +133,19 @@ export default function AuthPage({ onLoginSuccess, allUsers, onRegisterUser }: A
     const success = onRegisterUser(newUser);
     if (success) {
       setRegSuccess(true);
+      // Pre-fill fields with registered credentials for easier subsequent logins
+      setLoginUsername(newUser.username);
+      setLoginPassword(newUser.password);
+      
       setTimeout(() => {
         setRegSuccess(false);
-        setIsLogin(true);
-        // Pre-fill fields for easy login
-        setLoginUsername(newUser.username);
-        setLoginPassword("");
+        // Automatically perform login on successful registration for seamless UX
+        onLoginSuccess({
+          username: newUser.username,
+          name: newUser.name,
+          role: newUser.role,
+          avatar: newUser.avatar
+        });
       }, 1500);
     }
   };
@@ -662,6 +678,12 @@ export default function AuthPage({ onLoginSuccess, allUsers, onRegisterUser }: A
                         ))}
                       </div>
                     </div>
+
+                    {regError && (
+                      <p className="text-[11px] text-rose-600 font-extrabold bg-rose-50 px-3 py-2 rounded-xl border border-rose-200 leading-normal">
+                        {regError}
+                      </p>
+                    )}
 
                     <button
                       type="submit"

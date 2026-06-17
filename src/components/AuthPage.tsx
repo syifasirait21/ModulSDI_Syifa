@@ -654,31 +654,6 @@ export default function AuthPage({ onLoginSuccess, allUsers, onRegisterUser }: A
                       </div>
                     </div>
 
-                    {/* AVATAR SELECTOR */}
-                    <div>
-                      <label className="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1.5">
-                        Pilih Avatar Profil ({regAvatar})
-                      </label>
-                      <div className="flex gap-2 overflow-x-auto py-1 scrollbar-none">
-                        {(activePortal === "siswa" ? studentAvatars : teacherAvatars).map((av) => (
-                          <button
-                            key={av}
-                            type="button"
-                            onClick={() => setRegAvatar(av)}
-                            className={`w-9 h-9 text-base rounded-full flex items-center justify-center shrink-0 border transition-all cursor-pointer ${
-                              regAvatar === av
-                                ? activePortal === "siswa"
-                                  ? "bg-emerald-50 border-emerald-400 scale-110 font-bold"
-                                  : "bg-amber-50 border-amber-400 scale-110 font-bold"
-                                : "bg-slate-100 border-slate-250 opacity-75 hover:opacity-100"
-                            }`}
-                          >
-                            {av}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
                     {regError && (
                       <p className="text-[11px] text-rose-600 font-extrabold bg-rose-50 px-3 py-2 rounded-xl border border-rose-200 leading-normal">
                         {regError}

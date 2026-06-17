@@ -65,6 +65,9 @@ export default function Dashboard({
       case "Sprout":
         return <Sprout {...props} />;
       default:
+        if (iconName && (iconName.length <= 3 || /\p{Emoji}/u.test(iconName))) {
+          return <span className="text-xl leading-none font-sans select-none">{iconName}</span>;
+        }
         return <Compass {...props} />;
     }
   };

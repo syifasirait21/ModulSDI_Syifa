@@ -25,7 +25,7 @@ import {
 import { StudentProfile, LessonContent, Badge } from "./types";
 import { LESSONS_DATA as ALL_LESSONS, BADGES_DATA as ALL_BADGES } from "./data";
 
-const LESSONS_DATA = ALL_LESSONS.filter(l => l.id === "materi_pasak" || l.id === "materi_dinamis");
+const DEFAULT_LESSONS_DATA = ALL_LESSONS.filter(l => l.id === "materi_pasak" || l.id === "materi_dinamis");
 const BADGES_DATA = ALL_BADGES.filter(b => 
   b.id === "badge_start" || 
   b.id === "badge_pasak" || 
@@ -295,6 +295,16 @@ export default function App() {
     return DEFAULT_USERS;
   });
 
+  const [lessons, setLessons] = useState<LessonContent[]>(() => {
+    const saved = localStorage.getItem("modul_gunung_lessons");
+    if (saved) {
+      try {
+        return JSON.parse(saved);
+      } catch (e) {}
+    }
+    return DEFAULT_LESSONS_DATA;
+  });
+
   const [currentUser, setCurrentUser] = useState<any | null>(() => {
     const saved = localStorage.getItem(LOCAL_STORAGE_ACTIVE_USER);
     if (saved) {
@@ -358,6 +368,11 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem(LOCAL_STORAGE_ALL_USERS, JSON.stringify(allUsers));
   }, [allUsers]);
+
+  // Sync lessons to local storage
+  useEffect(() => {
+    localStorage.setItem("modul_gunung_lessons", JSON.stringify(lessons));
+  }, [lessons]);
 
   // Sync assignments parsing
   useEffect(() => {
@@ -602,6 +617,14 @@ export default function App() {
     }
   };
 
+  const handleCreateLesson = (newL: LessonContent) => {
+    setLessons((prev) => {
+      const updated = [...prev, newL];
+      localStorage.setItem("modul_gunung_lessons", JSON.stringify(updated));
+      return updated;
+    });
+  };
+
   const checkAndUpdateStreak = () => {
     setProfile((prev) => {
       const today = new Date();
@@ -704,7 +727,7 @@ export default function App() {
     setProfile((prev) => ({ ...prev, avatar: newAvatar }));
   };
 
-  const activeLesson = LESSONS_DATA.find((l) => l.id === selectedLessonId);
+  const activeLesson = lessons.find((l) => l.id === selectedLessonId);
 
   return (
     <div className="w-screen h-screen bg-[#f3f9fc] flex flex-col selection:bg-amber-100 selection:text-slate-900 font-sans overflow-hidden relative">
@@ -848,13 +871,14 @@ export default function App() {
                 <TeacherDashboard
                   currentUser={currentUser}
                   allUsers={allUsers}
-                  lessons={LESSONS_DATA}
+                  lessons={lessons}
                   assignments={assignments}
                   onCreateAssignment={handleCreateAssignment}
                   onDeleteAssignment={handleDeleteAssignment}
                   onDeleteStudent={handleDeleteStudent}
                   onResetStudent={handleResetStudent}
                   onLogout={handleLogout}
+                  onCreateLesson={handleCreateLesson}
                 />
               </motion.div>
             )}
@@ -869,7 +893,7 @@ export default function App() {
               >
                 <Dashboard
                   profile={profile}
-                  lessons={LESSONS_DATA}
+                  lessons={lessons}
                   assignments={assignments}
                   onSelectLesson={handleSelectLesson}
                   onNavigateTab={(tab) => setScreen(tab as any)}
